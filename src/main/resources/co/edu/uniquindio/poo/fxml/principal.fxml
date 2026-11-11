@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.viewcontrollers.PrincipalViewController">
+    <top>
+        <VBox spacing="9" alignment="CENTER">
+            <Label text="MONEDERO VIRTUAL" textFill="#48337e">
+                <font><Font name="System Bold" size="27"/></font>
+            </Label>
+            <Label text="Proyecto Final - Programación I | Universidad del Quindío" textFill="#48337e"/>
+            <Label fx:id="resumen" text="Selecciona un cliente para comenzar." textFill="#32244c"/>
+        </VBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true">
+            <content>
+                <VBox spacing="13">
+                    <TitledPane text="1. CLIENTES Y MONEDEROS" expanded="true">
+                        <content><VBox spacing="8">
+                            <HBox spacing="8">
+                                <TextField fx:id="documento" promptText="Documento" prefWidth="160"/>
+                                <TextField fx:id="nombre" promptText="Nombre del cliente" prefWidth="230"/>
+                                <Button text="Registrar cliente" onAction="#registrarCliente"/>
+                                <Button text="Editar nombre" onAction="#editarCliente"/>
+                                <Button text="Eliminar cliente" onAction="#eliminarCliente"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <ComboBox fx:id="cliente" promptText="Selecciona cliente" prefWidth="280"/>
+                                <ComboBox fx:id="monedero" promptText="Selecciona monedero" prefWidth="240"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <TextField fx:id="nombreMonedero" promptText="Nuevo monedero (ej. Ahorros)" prefWidth="280"/>
+                                <Button text="Crear monedero" onAction="#registrarMonedero"/>
+                            </HBox>
+                        </VBox></content>
+                    </TitledPane>
+                    <TitledPane text="2. DEPÓSITOS, RETIROS Y TRANSFERENCIAS" expanded="true">
+                        <content><VBox spacing="8">
+                            <HBox spacing="8">
+                                <TextField fx:id="monto" promptText="Monto (ej. 1000)" prefWidth="180"/>
+                                <Button text="Depositar" onAction="#depositar"/>
+                                <Button text="Retirar" onAction="#retirar"/>
+                                <Button text="Ver historial" onAction="#historial"/>
+                                <Button text="Reporte de gastos" onAction="#reporte"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <ComboBox fx:id="destinatario" promptText="Cliente destino" prefWidth="280"/>
+                                <ComboBox fx:id="monederoDestino" promptText="Monedero destino" prefWidth="240"/>
+                                <Button text="Transferir" onAction="#transferir"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <TextField fx:id="codigo" promptText="Código de transacción a revertir" prefWidth="265"/>
+                                <Button text="Revertir transacción" onAction="#revertir"/>
+                            </HBox>
+                        </VBox></content>
+                    </TitledPane>
+                    <TitledPane text="3. PUNTOS Y BENEFICIOS" expanded="true">
+                        <content><HBox spacing="8">
+                            <Button text="100 puntos: descuento" onAction="#canjear100"/>
+                            <Button text="500 puntos: retiros gratis" onAction="#canjear500"/>
+                            <Button text="1000 puntos: bono $50" onAction="#canjear1000"/>
+                            <Button text="Historial de puntos" onAction="#historialPuntos"/>
+                        </HBox></content>
+                    </TitledPane>
+                    <TitledPane text="4. TRANSACCIONES PROGRAMADAS" expanded="true">
+                        <content><VBox spacing="8">
+                            <HBox spacing="8">
+                                <ComboBox fx:id="tipoProgramada" prefWidth="150"/>
+                                <DatePicker fx:id="fecha" prefWidth="175"/>
+                                <ComboBox fx:id="frecuencia" prefWidth="150"/>
+                                <Button text="Programar" onAction="#programar"/>
+                                <Button text="Ejecutar vencidas" onAction="#ejecutarProgramadas"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <Button text="Ver programadas" onAction="#verProgramadas"/>
+                                <TextField fx:id="codigoProgramada" promptText="Código programada" prefWidth="180"/>
+                                <Button text="Cancelar programada" onAction="#cancelarProgramada"/>
+                            </HBox>
+                        </VBox></content>
+                    </TitledPane>
+                    <HBox spacing="9" alignment="CENTER_LEFT">
+                        <Label text="RESULTADOS Y ALERTAS" textFill="#48337e"/>
+                        <Button text="Ver notificaciones" onAction="#verNotificaciones"/>
+                    </HBox>
+                    <TextArea fx:id="salida" editable="false" prefRowCount="7" wrapText="true" promptText="Aquí aparecerán los resultados..."/>
+                    <Label text="Simulador educativo: los datos se guardan en memoria mientras la aplicación está abierta."/>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
