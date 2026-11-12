@@ -1,9 +1,11 @@
-Pruebas ejecutadas con JDK 21.0.13, Maven 3.8.5 y JavaFX 21.0.6.
+Pruebas con JDK 21.0.13, Maven 3.8.5 y JavaFX 21.0.6.
+Estructura: Aplicacion → ViewController → Controller → MonederoVirtual.
 Fecha local: 11 de noviembre de 2026 (America/Bogota).
 
-co.edu.uniquindio.poo.controller.CasosLimiteTest: pruebas=19, fallos=0, errores=0, omitidas=0
-co.edu.uniquindio.poo.controller.MonederoControllerTest: pruebas=6, fallos=0, errores=0, omitidas=0
-co.edu.uniquindio.poo.controller.ReglasAvanzadasTest: pruebas=15, fallos=0, errores=0, omitidas=0
+co.edu.uniquindio.poo.monedero.controller.ControladoresTest: pruebas=1, fallos=0, errores=0, omitidas=0
+co.edu.uniquindio.poo.monedero.model.CasosLimiteTest: pruebas=19, fallos=0, errores=0, omitidas=0
+co.edu.uniquindio.poo.monedero.model.MonederoVirtualTest: pruebas=6, fallos=0, errores=0, omitidas=0
+co.edu.uniquindio.poo.monedero.model.ReglasAvanzadasTest: pruebas=15, fallos=0, errores=0, omitidas=0
 
-TOTAL: pruebas=40, fallos=0, errores=0, omitidas=0
+TOTAL: pruebas=41, fallos=0, errores=0, omitidas=0
 BUILD SUCCESS

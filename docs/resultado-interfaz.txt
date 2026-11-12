@@ -39,11 +39,14 @@ OK: Mensaje: cancelada (recibido: Operación programada cancelada.)
 OK: Mensaje: No existe (recibido: Aviso: No existe esa operación programada.)
 OK: Mensaje: Transferencia recibida (recibido: NOTIFICACIONES DEL SIMULADOR Transferencia recibida: Luis / $200.0 ALERTA para Ana María: operación atípica #5 Recordatorio: Ana María programó una operación para 2026-11-12 Recordatorio: Ana María programó una operación para 2026-11-13 )
 OK: Mensaje: Recordatorio (recibido: NOTIFICACIONES DEL SIMULADOR Transferencia recibida: Luis / $200.0 ALERTA para Ana María: operación atípica #5 Recordatorio: Ana María programó una operación para 2026-11-12 Recordatorio: Ana María programó una operación para 2026-11-13 )
+OK: Clientes conserva modelo compartido
 OK: Mensaje: Cliente registrado (recibido: Cliente registrado: Temporal (999))
 OK: Mensaje: Cliente eliminado (recibido: Cliente eliminado.)
-OK: Limpia destinatario eliminado
-OK: Limpia monedero del destinatario eliminado
-OK: Limpia monedero cuando no hay cliente
-OK: Mensaje: No se elimina un cliente con historial (recibido: Aviso: No se elimina un cliente con historial financiero.)
-OK: Resumen sigue disponible después del rechazo
-INTERFAZ: 48 comprobaciones aprobadas
+OK: Limpia cliente eliminado
+OK: Mensaje: No se elimina un cliente con historial (recibido: No se elimina un cliente con historial financiero.)
+OK: No ofrece destinatario eliminado
+OK: Sin destino seleccionado al abrir pantalla
+OK: Sin monedero seleccionado al abrir pantalla
+OK: Resumen recupera los datos compartidos
+OK: Saldo se conserva al volver al inicio
+INTERFAZ: 51 comprobaciones aprobadas

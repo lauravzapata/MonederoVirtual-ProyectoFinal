@@ -6,6 +6,8 @@ Un simulador de escritorio para administrar clientes, separar ahorros y gastos, 
 
 ![Vista del monedero](docs/interfaz.png)
 
+Otras pantallas: [Inicio](docs/inicio.png) · [Clientes](docs/clientes.png).
+
 ## Ejecutar
 
 Requisito: **JDK 21** (incluye compilador), conexión para la primera descarga y un escritorio gráfico.
@@ -28,7 +30,7 @@ También puedes usar `mvn` si tienes Maven instalado. No hace falta descargar Ja
 
 ## Recorrido de demostración
 
-1. Registra a Ana (101) y Luis (102). Selecciona Ana como cliente.
+1. En Inicio entra a **Clientes** y registra a Ana (101) y Luis (102). Pulsa **Volver al inicio**, abre **Monedero** y selecciona Ana como cliente.
 2. Deposita 1000: aparecen saldo 1000, 10 puntos y rango Bronce.
 3. Selecciona Luis y su monedero como destino. Transfiere 200: Ana queda con 798 y Luis recibe 200. La comisión es 2.
 4. Selecciona Luis y consulta su historial: aparece la transferencia recibida sin puntos adicionales.
@@ -38,20 +40,39 @@ También puedes usar `mvn` si tienes Maven instalado. No hace falta descargar Ja
 8. En Programadas selecciona depósito, fecha de hoy y frecuencia semanal. El monto se toma de Movimientos. Pulsa Ejecutar vencidas; una segunda pulsación el mismo día no repite el movimiento.
 9. Para demostrar beneficios rápidamente, deposita 200000 en un cliente de prueba y revisa Puntos y beneficios.
 
-## Organización, como en el ejemplo `empresa`
+## Organización, como en `ParcialPanaderia3` y el ejemplo docente `empresa`
 
 ```text
-src/main/java/co/edu/uniquindio/poo/
-├── app/              Main: inicia JavaFX y carga el FXML
-├── model/            Clientes, monederos, transacciones y puntos
-├── controller/       MonederoController: coordina reglas y validaciones
-├── viewcontrollers/  PrincipalViewController: eventos y presentación
-└── exceptions/       Tres excepciones personalizadas
-src/main/resources/co/edu/uniquindio/poo/fxml/principal.fxml
-src/test/java/co/edu/uniquindio/poo/controller/
+src/main/java/
+├── module-info.java
+└── co/edu/uniquindio/poo/monedero/
+    ├── app/Aplicacion.java
+    ├── model/MonederoVirtual.java   ← listas, reglas y validaciones
+    ├── model/                      ← Cliente, Monedero y transacciones
+    ├── controller/
+    │   ├── ClienteController.java   ← delega en MonederoVirtual
+    │   └── MonederoController.java  ← delega en MonederoVirtual
+    ├── viewcontrollers/
+    │   ├── InicioViewController.java
+    │   ├── ClienteViewController.java
+    │   └── MonederoViewController.java
+    └── exceptions/                 ← tres excepciones personalizadas
+src/main/resources/co/edu/uniquindio/poo/monedero/
+├── inicio.fxml
+├── clientes.fxml
+└── monedero.fxml
+src/test/java/co/edu/uniquindio/poo/monedero/
+├── model/                          ← pruebas de reglas del negocio
+└── controller/                     ← prueba de modelo compartido
 ```
 
-Se emplean clases, herencia, interfaz, listas `ArrayList`, ciclos, condicionales, excepciones, lambda, Stream API, JavaFX y FXML. No se añadieron frameworks de backend, base de datos ni librerías de diseño. La apariencia utiliza propiedades y controles FXML, sin CSS.
+`MonederoVirtual` cumple el papel de `Panaderia`: conserva listas y ejecuta las reglas. `ClienteController` y `MonederoController` reciben ese modelo en su constructor y delegan en él. `Aplicacion` carga cada FXML con `FXMLLoader`, obtiene el controlador de vista y llama a `setApp(this)`. Las tres pantallas comparten la misma instancia, por lo que navegar no reinicia los saldos.
+
+Los eventos se llaman `registrarClienteEvent`, `depositarEvent`, `volverEvent`, etc. Los controles usan los prefijos del parcial: `txtDocumento`, `txtMonto`, `cmbCliente`, `lblResultado`. Las listas se protegen con `Collections.unmodifiableList`, como en `Panaderia`.
+
+Se emplean clases, herencia, interfaz `IOperacion`, listas `List`/`ArrayList`, ciclos, condicionales, excepciones, lambda, Stream API, JavaFX y FXML. No se añadieron frameworks de backend, base de datos ni librerías de diseño. La apariencia utiliza propiedades y controles FXML, sin CSS. Los Streams y las tres excepciones personalizadas se mantienen porque el Word los exige.
+
+Consulta la [relación con los ejemplos y el Word](docs/ESTRUCTURA_DEL_CURSO.md) para ubicar cada concepto.
 
 ## Reglas definidas
 

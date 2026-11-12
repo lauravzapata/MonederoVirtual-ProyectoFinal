@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.MonederoViewController" prefWidth="1120" prefHeight="840">
+<children><BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+<padding><Insets top="20" right="24" bottom="18" left="24"/></padding>
+<top><VBox spacing="12">
+ <HBox spacing="20" alignment="CENTER_LEFT"><Button text="Volver al inicio" onAction="#volverEvent"/><Label text="◈  Monedero Virtual" textFill="#48337e"><font><Font name="System Bold" size="30"/></font></Label></HBox>
+ <Label text="Tu dinero organizado. Cada movimiento cuenta." textFill="#655b78"><font><Font size="14"/></font></Label>
+ <Separator/>
+ <Label fx:id="lblResumen" text="Selecciona un cliente para comenzar." textFill="#48337e"><font><Font name="System Bold" size="18"/></font></Label>
+                    <TitledPane text="Tu cuenta · Selección y monederos" collapsible="false" expanded="true">
+                        <content><VBox spacing="8">
+<HBox spacing="8">
+                                <ComboBox fx:id="cmbCliente" promptText="Selecciona cliente" prefWidth="280"/>
+                                <ComboBox fx:id="cmbMonedero" promptText="Selecciona monedero" prefWidth="240"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <TextField fx:id="txtNombreMonedero" promptText="Nuevo monedero (ej. Ahorros)" prefWidth="280"/>
+                                <Button text="Crear monedero" onAction="#registrarMonederoEvent"/>
+                            </HBox>
+                        </VBox></content>
+                    </TitledPane><Label text="Las operaciones usan el cliente y monedero seleccionados. Para transferir, elige también el destino." textFill="#655b78"/>
+<Separator/>
+</VBox></top>
+<center><TabPane tabClosingPolicy="UNAVAILABLE"><tabs>
+<Tab text="Movimientos"><content><ScrollPane fitToWidth="true"><content><VBox spacing="16"><padding><Insets top="18" right="12" bottom="18" left="12"/></padding><Label text="Deposita, retira o transfiere. Consulta tu actividad y tus gastos." wrapText="true" textFill="#655b78"/><VBox spacing="8">
+                            <HBox spacing="8">
+                                <TextField fx:id="txtMonto" promptText="Monto (ej. 1000)" prefWidth="180"/>
+                                <Button text="Depositar" onAction="#depositarEvent"/>
+                                <Button text="Retirar" onAction="#retirarEvent"/>
+                                <Button text="Ver historial" onAction="#historialEvent"/>
+                                <Button text="Reporte de gastos" onAction="#reporteEvent"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <ComboBox fx:id="cmbDestinatario" promptText="Cliente destino" prefWidth="280"/>
+                                <ComboBox fx:id="cmbMonederoDestino" promptText="Monedero destino" prefWidth="240"/>
+                                <Button text="Transferir" onAction="#transferirEvent"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <TextField fx:id="txtCodigo" promptText="Código de transacción a revertir" prefWidth="265"/>
+                                <Button text="Revertir transacción" onAction="#revertirEvent"/>
+                            </HBox>
+                        </VBox></VBox></content></ScrollPane></content></Tab>
+<Tab text="Puntos y beneficios"><content><ScrollPane fitToWidth="true"><content><VBox spacing="16"><padding><Insets top="18" right="12" bottom="18" left="12"/></padding><Label text="Convierte tus puntos en beneficios. El rango se calcula con tus puntos disponibles." wrapText="true" textFill="#655b78"/><HBox spacing="8">
+                            <Button text="100 puntos: descuento" onAction="#canjear100Event"/>
+                            <Button text="500 puntos: retiros gratis" onAction="#canjear500Event"/>
+                            <Button text="1000 puntos: bono $50" onAction="#canjear1000Event"/>
+                            <Button text="Historial de puntos" onAction="#historialPuntosEvent"/>
+                        </HBox></VBox></content></ScrollPane></content></Tab>
+<Tab text="Programadas"><content><ScrollPane fitToWidth="true"><content><VBox spacing="16"><padding><Insets top="18" right="12" bottom="18" left="12"/></padding><Label text="Usa el monto y el destino de Movimientos. Las pendientes se procesan al pulsar Ejecutar vencidas." wrapText="true" textFill="#655b78"/><VBox spacing="10"><HBox spacing="8"><Label text="Destino:"/><Label text="Seleccionado en la pestaña Movimientos"/></HBox><VBox spacing="8">
+                            <HBox spacing="8">
+                                <ComboBox fx:id="cmbTipoProgramada" prefWidth="150"/>
+                                <DatePicker fx:id="dpFecha" prefWidth="175"/>
+                                <ComboBox fx:id="cmbFrecuencia" prefWidth="150"/>
+                                <Button text="Programar" onAction="#programarEvent"/>
+                                <Button text="Ejecutar vencidas" onAction="#ejecutarProgramadasEvent"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                <Button text="Ver programadas" onAction="#verProgramadasEvent"/>
+                                <TextField fx:id="txtCodigoProgramada" promptText="Código programada" prefWidth="180"/>
+                                <Button text="Cancelar programada" onAction="#cancelarProgramadaEvent"/>
+                            </HBox>
+                        </VBox></VBox></VBox></content></ScrollPane></content></Tab>
+</tabs></TabPane></center>
+<bottom><VBox spacing="8">
+<Separator/>
+<HBox spacing="12" alignment="CENTER_LEFT"><Label text="Actividad y resultados" textFill="#48337e"><font><Font name="System Bold" size="15"/></font></Label><Button text="Ver notificaciones" onAction="#verNotificacionesEvent"/></HBox>
+<TextArea fx:id="txtSalida" editable="false" prefRowCount="6" wrapText="true" promptText="Aquí aparecerán tus operaciones y alertas."/>
+<Label text="Simulador académico · Datos en memoria durante esta sesión · Comisión base: 1%" textFill="#655b78"/>
+</VBox></bottom>
+</BorderPane></children></AnchorPane>

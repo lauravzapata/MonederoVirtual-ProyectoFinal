@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.InicioViewController" prefWidth="1120" prefHeight="840">
+ <children>
+  <Label layoutX="90" layoutY="110" text="◈ Monedero Virtual" textFill="#48337e"><font><Font name="System Bold" size="36"/></font></Label>
+  <Label layoutX="92" layoutY="170" text="Tu dinero organizado. Cada movimiento cuenta." textFill="#655b78"><font><Font size="18"/></font></Label>
+  <Separator layoutX="90" layoutY="220" prefWidth="870"/>
+  <Label layoutX="92" layoutY="260" text="¿Qué quieres hacer hoy?" textFill="#48337e"><font><Font name="System Bold" size="22"/></font></Label>
+  <Button layoutX="90" layoutY="320" prefWidth="340" prefHeight="80" text="Clientes" onAction="#abrirClientesEvent"><font><Font name="System Bold" size="20"/></font></Button>
+  <Label layoutX="92" layoutY="420" text="Registrar, editar y consultar clientes." textFill="#655b78"/>
+  <Button layoutX="500" layoutY="320" prefWidth="340" prefHeight="80" text="Monedero" onAction="#abrirMonederoEvent"><font><Font name="System Bold" size="20"/></font></Button>
+  <Label layoutX="502" layoutY="420" text="Movimientos, puntos, beneficios y programadas." textFill="#655b78"/>
+  <Separator layoutX="90" layoutY="520" prefWidth="870"/>
+  <Label layoutX="92" layoutY="550" text="1. Registra un cliente.   2. Crea sus monederos.   3. Realiza tus operaciones." textFill="#48337e"/>
+  <Label layoutX="92" layoutY="610" text="Proyecto final · Programación I · Universidad del Quindío" textFill="#655b78"/>
+  <Label layoutX="92" layoutY="650" text="Simulador académico: los datos se conservan durante esta sesión." textFill="#655b78"/>
+ </children>
+</AnchorPane>

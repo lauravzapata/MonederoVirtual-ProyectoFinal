@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.ClienteViewController" prefWidth="1120" prefHeight="840">
+ <children>
+  <Button layoutX="35" layoutY="30" text="Volver al inicio" onAction="#volverEvent"/>
+  <Label layoutX="220" layoutY="25" text="Clientes" textFill="#48337e"><font><Font name="System Bold" size="30"/></font></Label>
+  <Separator layoutX="35" layoutY="85" prefWidth="1040"/>
+  <Label layoutX="35" layoutY="115" text="Documento"/>
+  <TextField fx:id="txtDocumento" layoutX="35" layoutY="145" prefWidth="240" promptText="Ejemplo: 101"/>
+  <Label layoutX="300" layoutY="115" text="Nombre del cliente"/>
+  <TextField fx:id="txtNombre" layoutX="300" layoutY="145" prefWidth="380" promptText="Nombre completo"/>
+  <Button layoutX="720" layoutY="145" prefWidth="210" text="Registrar cliente" onAction="#registrarClienteEvent"/>
+  <Label layoutX="35" layoutY="215" text="Selecciona un cliente para editar su nombre o eliminarlo"/>
+  <ComboBox fx:id="cmbCliente" layoutX="35" layoutY="250" prefWidth="380" promptText="Cliente"/>
+  <Button layoutX="445" layoutY="250" prefWidth="180" text="Editar nombre" onAction="#editarClienteEvent"/>
+  <Button layoutX="650" layoutY="250" prefWidth="180" text="Eliminar cliente" onAction="#eliminarClienteEvent"/>
+  <Label layoutX="35" layoutY="310" text="Para editar, selecciona el cliente y escribe el nuevo nombre arriba." textFill="#655b78"/>
+  <Label fx:id="lblResultado" layoutX="35" layoutY="355" prefWidth="1000" wrapText="true" text="Registra tu primer cliente para comenzar." textFill="#48337e"/>
+  <Separator layoutX="35" layoutY="410" prefWidth="1040"/>
+  <Label layoutX="35" layoutY="440" text="Clientes registrados" textFill="#48337e"><font><Font name="System Bold" size="19"/></font></Label>
+  <ScrollPane layoutX="35" layoutY="485" prefWidth="1000" prefHeight="245" fitToWidth="true"><content><Label fx:id="lblClientes" wrapText="true"/></content></ScrollPane>
+  <Label layoutX="35" layoutY="770" text="Cada cliente recibe un monedero Principal. Puedes crear Ahorros y otros desde Monedero." textFill="#655b78"/>
+ </children>
+</AnchorPane>
