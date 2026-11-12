@@ -9,12 +9,12 @@ public class Monedero {
     public double getSaldo() { return saldo; }
     public void depositar(double monto) throws DatoInvalidoException {
         if (!Double.isFinite(monto) || monto <= 0) throw new DatoInvalidoException("El monto debe ser positivo.");
-        saldo += monto;
+        saldo = Math.round((saldo + monto) * 100.0) / 100.0;
     }
     public void retirar(double monto) throws DatoInvalidoException, SaldoInsuficienteException {
         if (!Double.isFinite(monto) || monto <= 0) throw new DatoInvalidoException("El monto debe ser positivo.");
         if (monto > saldo) throw new SaldoInsuficienteException("No hay saldo suficiente en " + nombre + ".");
-        saldo -= monto;
+        saldo = Math.round((saldo - monto) * 100.0) / 100.0;
     }
     @Override public String toString() { return nombre + " ($" + String.format("%.2f", saldo) + ")"; }
 }

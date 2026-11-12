@@ -26,6 +26,7 @@ public class PrincipalViewController {
         cliente.setOnAction(event -> actualizarMonederos());
         destinatario.setOnAction(event -> actualizarDestino());
         refrescar();
+        salida.setText("¡Bienvenida! Registra un cliente y realiza tu primer depósito.\nLas operaciones usan el cliente y el monedero seleccionados arriba.");
     }
     private void refrescar() {
         Cliente actual = cliente.getValue();
@@ -35,7 +36,7 @@ public class PrincipalViewController {
         cliente.setItems(FXCollections.observableArrayList(controller.getClientes()));
         destinatario.setItems(FXCollections.observableArrayList(controller.getClientes()));
         cliente.setValue(actual);
-        destinatario.setValue(receptor);
+        destinatario.setValue(controller.getClientes().contains(receptor) ? receptor : null);
         actualizarMonederos();
         actualizarDestino();
         if (actual != null && actual.getMonederos().contains(actualMonedero)) monedero.setValue(actualMonedero);
@@ -92,6 +93,10 @@ public class PrincipalViewController {
         try {
             Cliente c = clienteActivo();
             if (c == null) { salida.setText("Selecciona un cliente."); return; }
+            Alert confirmar = new Alert(Alert.AlertType.CONFIRMATION,
+                    "¿Eliminar al cliente " + c.getNombre() + "?", ButtonType.OK, ButtonType.CANCEL);
+            confirmar.setHeaderText("Eliminar cliente");
+            if (confirmar.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
             controller.eliminarCliente(c.getDocumento());
             cliente.setValue(null); refrescar(); salida.setText("Cliente eliminado.");
         } catch (Exception e) { mensajeError(e); }

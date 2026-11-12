@@ -4,7 +4,7 @@ import co.edu.uniquindio.poo.model.*;
 import co.edu.uniquindio.poo.exceptions.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
+
 
 /** Contiene las reglas del negocio. Los datos se conservan durante la ejecución. */
 public class MonederoController {
@@ -14,9 +14,9 @@ public class MonederoController {
     private int siguienteCodigo = 1;
     private int siguienteProgramada = 1;
 
-    public ArrayList<Cliente> getClientes() { return clientes; }
-    public ArrayList<TransaccionProgramada> getProgramadas() { return programadas; }
-    public ArrayList<String> getNotificaciones() { return notificaciones; }
+    public ArrayList<Cliente> getClientes() { return new ArrayList<>(clientes); }
+    public ArrayList<TransaccionProgramada> getProgramadas() { return new ArrayList<>(programadas); }
+    public ArrayList<String> getNotificaciones() { return new ArrayList<>(notificaciones); }
 
     public Cliente registrarCliente(String documento, String nombre) throws DatoInvalidoException {
         if (documento == null || documento.trim().isEmpty() || nombre == null || nombre.trim().isEmpty())
@@ -33,6 +33,8 @@ public class MonederoController {
     public void eliminarCliente(String documento) throws CuentaNoEncontradaException, DatoInvalidoException {
         Cliente cliente = buscarCliente(documento);
         if (cliente == null) throw new CuentaNoEncontradaException("No se encontró el cliente.");
+        if (!cliente.getHistorial().isEmpty())
+            throw new DatoInvalidoException("No se elimina un cliente con historial financiero.");
         for (Monedero m : cliente.getMonederos())
             if (m.getSaldo() > 0) throw new DatoInvalidoException("Primero retira o transfiere todos los saldos.");
         for (TransaccionProgramada p : programadas)
@@ -52,7 +54,7 @@ public class MonederoController {
         for (Monedero m : cliente.getMonederos())
             if (m.getNombre().equalsIgnoreCase(nombre.trim())) throw new DatoInvalidoException("Ya existe ese monedero.");
         Monedero nuevo = new Monedero(nombre.trim());
-        cliente.getMonederos().add(nuevo);
+        cliente.agregarMonedero(nuevo);
         return nuevo;
     }
     private void verificarCliente(Cliente cliente) throws DatoInvalidoException {
@@ -66,17 +68,20 @@ public class MonederoController {
     private void verificarMonto(double monto) throws DatoInvalidoException {
         if (!Double.isFinite(monto) || monto <= 0 || monto > 1000000000)
             throw new DatoInvalidoException("Ingresa un monto mayor a cero y hasta mil millones.");
+        if (Math.abs(monto * 100 - Math.rint(monto * 100)) > 0.00001)
+            throw new DatoInvalidoException("El monto admite como máximo dos decimales.");
     }
     private boolean esAtipica(Cliente cliente, double monto) {
         double suma = 0;
         int cantidad = 0;
-        for (Transaccion t : cliente.getHistorial()) {
+        ArrayList<Transaccion> historial = cliente.getHistorial();
+        for (Transaccion t : historial) {
             if (!t.isRevertida()) { suma += t.getMonto(); cantidad++; }
         }
         if (cantidad < 2) return false;
         double promedio = suma / cantidad;
         double sumaCuadrados = 0;
-        for (Transaccion t : cliente.getHistorial()) {
+        for (Transaccion t : historial) {
             if (!t.isRevertida())
                 sumaCuadrados += (t.getMonto() - promedio) * (t.getMonto() - promedio);
         }
@@ -85,7 +90,7 @@ public class MonederoController {
     }
     private void registrar(Transaccion transaccion) {
         Cliente cliente = transaccion.getCliente();
-        cliente.getHistorial().add(transaccion);
+        cliente.agregarTransaccion(transaccion);
         cliente.agregarPuntos(transaccion.calcularPuntos(), "Transacción #" + transaccion.getCodigo());
         if (transaccion.isSospechosa()) {
             notificaciones.add("ALERTA para " + cliente.getNombre() + ": operación atípica #" + transaccion.getCodigo());
@@ -103,6 +108,7 @@ public class MonederoController {
             throws DatoInvalidoException, SaldoInsuficienteException {
         verificarMonedero(cliente, monedero); verificarMonto(monto);
         double comision = cliente.tieneRetirosGratis(LocalDate.now()) ? 0 : monto * 0.01;
+        comision = Math.round(comision * 100.0) / 100.0;
         boolean alerta = esAtipica(cliente, monto);
         monedero.retirar(monto + comision);
         Transaccion transaccion = new Retiro(siguienteCodigo++, cliente, monedero, monto, comision, alerta);
@@ -114,14 +120,17 @@ public class MonederoController {
             throws DatoInvalidoException, SaldoInsuficienteException {
         verificarMonedero(cliente, desde); verificarMonedero(destinatario, hacia); verificarMonto(monto);
         if (desde == hacia) throw new DatoInvalidoException("Elige otro monedero de destino.");
-        double comision = monto * 0.01;
+        double comision = monto * 0.01 * (1 - cliente.getDescuentoPorRango());
         if (cliente.tieneDescuentoTransferencia()) comision = comision * 0.90;
+        comision = Math.round(comision * 100.0) / 100.0;
         boolean alerta = esAtipica(cliente, monto);
         desde.retirar(monto + comision);
         hacia.depositar(monto);
         Transaccion transaccion = new Transferencia(siguienteCodigo++, cliente, desde,
                 destinatario, hacia, monto, comision, alerta);
         registrar(transaccion);
+        destinatario.agregarTransaccion(new TransferenciaRecibida(transaccion));
+        notificaciones.add("Transferencia recibida: " + destinatario.getNombre() + " / $" + monto);
         avisarSaldoBajo(cliente, desde);
         return transaccion;
     }
@@ -134,6 +143,10 @@ public class MonederoController {
         verificarCliente(cliente);
         for (Transaccion t : cliente.getHistorial()) {
             if (t.getCodigo() == codigo) {
+                if (t instanceof TransferenciaRecibida)
+                    throw new DatoInvalidoException("La transferencia debe revertirla el emisor.");
+                if (cliente.getPuntos() < t.calcularPuntos())
+                    throw new DatoInvalidoException("No se puede revertir: los puntos de esta operación ya fueron canjeados.");
                 t.revertir();
                 cliente.agregarPuntos(-t.calcularPuntos(), "Reversión #" + codigo);
                 return;
@@ -146,8 +159,10 @@ public class MonederoController {
         if (puntos != 100 && puntos != 500 && puntos != 1000)
             throw new DatoInvalidoException("Elige un beneficio válido.");
         if (cliente.getPuntos() < puntos) throw new DatoInvalidoException("No tienes suficientes puntos.");
+        if (puntos == 100 && cliente.tieneDescuentoTransferencia())
+            throw new DatoInvalidoException("Ya tienes activo el descuento permanente.");
         if (puntos == 100) cliente.setDescuentoTransferencia(true);
-        if (puntos == 500) cliente.activarRetirosGratis(LocalDate.now().plusMonths(1));
+        if (puntos == 500) cliente.extenderRetirosGratis(LocalDate.now());
         if (puntos == 1000) monedero.depositar(50);
         cliente.agregarPuntos(-puntos, "Canje de beneficio");
     }
@@ -155,7 +170,7 @@ public class MonederoController {
                                            Monedero hacia, double monto, LocalDate fecha, String frecuencia)
             throws DatoInvalidoException {
         verificarMonedero(cliente, desde); verificarMonto(monto);
-        if (!tipo.equals("Depósito") && !tipo.equals("Transferencia"))
+        if (!"Depósito".equals(tipo) && !"Transferencia".equals(tipo))
             throw new DatoInvalidoException("Elige depósito o transferencia.");
         if (tipo.equals("Transferencia")) {
             verificarMonedero(destino, hacia);
@@ -163,7 +178,7 @@ public class MonederoController {
         }
         if (fecha == null || fecha.isBefore(LocalDate.now()))
             throw new DatoInvalidoException("Elige una fecha actual o futura.");
-        if (!frecuencia.equals("Única") && !frecuencia.equals("Semanal") && !frecuencia.equals("Mensual"))
+        if (!"Única".equals(frecuencia) && !"Semanal".equals(frecuencia) && !"Mensual".equals(frecuencia))
             throw new DatoInvalidoException("Frecuencia inválida.");
         TransaccionProgramada p = new TransaccionProgramada(siguienteProgramada++, tipo,
                 cliente, desde, destino, hacia, monto, fecha, frecuencia);
@@ -182,18 +197,28 @@ public class MonederoController {
         int realizadas = 0;
         int fallidas = 0;
         ordenarProgramadas();
-        // Una ejecución por cada operación vencida; las recurrentes avanzan a su siguiente fecha.
-        for (TransaccionProgramada p : programadas) {
-            if (p.getFecha() != null && !p.getFecha().isAfter(hoy)) {
-                try {
-                    if (p.getTipo().equals("Depósito")) depositar(p.getOrigen(), p.getMonederoOrigen(), p.getMonto());
-                    else transferir(p.getOrigen(), p.getMonederoOrigen(), p.getDestino(), p.getMonederoDestino(), p.getMonto());
-                    p.avanzar();
-                    realizadas++;
-                } catch (DatoInvalidoException | SaldoInsuficienteException e) {
-                    fallidas++;
-                    notificaciones.add("No se ejecutó la programada #" + p.getCodigo() + ": " + e.getMessage());
+        // Volver a ordenar permite intercalar las recurrencias en orden cronológico.
+        ArrayList<TransaccionProgramada> fallos = new ArrayList<>();
+        while (true) {
+            ordenarProgramadas();
+            TransaccionProgramada pendiente = null;
+            for (TransaccionProgramada p : programadas) {
+                if (p.getFecha() != null && !p.getFecha().isAfter(hoy) && !fallos.contains(p)) {
+                    pendiente = p;
+                    break;
                 }
+            }
+            if (pendiente == null) break;
+            TransaccionProgramada p = pendiente;
+            try {
+                if (p.getTipo().equals("Depósito")) depositar(p.getOrigen(), p.getMonederoOrigen(), p.getMonto());
+                else transferir(p.getOrigen(), p.getMonederoOrigen(), p.getDestino(), p.getMonederoDestino(), p.getMonto());
+                p.avanzar();
+                realizadas++;
+            } catch (DatoInvalidoException | SaldoInsuficienteException e) {
+                fallos.add(p);
+                fallidas++;
+                notificaciones.add("No se ejecutó la programada #" + p.getCodigo() + ": " + e.getMessage());
             }
         }
         ordenarProgramadas();
@@ -220,10 +245,27 @@ public class MonederoController {
                 .filter(t -> !t.isRevertida() && t.getTipo().equals("Transferencia"))
                 .mapToDouble(t -> t.getMonto()).sum();
         long alertas = cliente.getHistorial().stream().filter(t -> t.isSospechosa() && !t.isRevertida()).count();
+        double comisiones = cliente.getHistorial().stream().filter(t -> !t.isRevertida())
+                .mapToDouble(t -> t.getComision()).sum();
+        double recibidas = cliente.getHistorial().stream()
+                .filter(t -> !t.isRevertida() && t instanceof TransferenciaRecibida)
+                .mapToDouble(t -> t.getMonto()).sum();
+        double promedioGasto = cliente.getHistorial().stream()
+                .filter(t -> !t.isRevertida() && (t instanceof Retiro || t instanceof Transferencia))
+                .mapToDouble(t -> t.getMonto() + t.getComision()).average().orElse(0);
+        double mayorGasto = cliente.getHistorial().stream()
+                .filter(t -> !t.isRevertida() && (t instanceof Retiro || t instanceof Transferencia))
+                .mapToDouble(t -> t.getMonto() + t.getComision()).max().orElse(0);
         return "REPORTE DE " + cliente.getNombre() + "\nDepósitos: $" + String.format("%.2f", depositos) +
                 "\nRetiros: $" + String.format("%.2f", retiros) +
                 "\nTransferencias: $" + String.format("%.2f", transferencias) +
-                "\nTotal de gastos: $" + String.format("%.2f", retiros + transferencias) +
+                "\nTotal de gastos: $" + String.format("%.2f", retiros + transferencias + comisiones) +
+                "\nComisiones: $" + String.format("%.2f", comisiones) +
+                "\nTransferencias recibidas: $" + String.format("%.2f", recibidas) +
+                "\nGasto promedio por operación: $" + String.format("%.2f", promedioGasto) +
+                "\nMayor gasto: $" + String.format("%.2f", mayorGasto) +
+                "\nPatrón predominante: " + (retiros + transferencias == 0 ? "Sin gastos" :
+                    retiros > transferencias ? "Retiros" : "Transferencias") +
                 "\nAlertas: " + alertas + "\nPuntos actuales: " + cliente.getPuntos() +
                 "\nRango: " + cliente.getRango();
     }

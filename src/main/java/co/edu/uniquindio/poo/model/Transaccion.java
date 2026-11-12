@@ -29,6 +29,6 @@ public abstract class Transaccion implements Operacion {
     @Override public String toString() {
         return "#" + codigo + " | " + fecha.toLocalDate() + " | " + getTipo() + " | $" +
             String.format("%.2f", monto) + " | Comisión: $" + String.format("%.2f", comision) +
-            (revertida ? " | REVERTIDA" : "") + (sospechosa ? " | ALERTA ATÍPICA" : "");
+            (isRevertida() ? " | REVERTIDA" : "") + (sospechosa ? " | ALERTA ATÍPICA" : "");
     }
 }
