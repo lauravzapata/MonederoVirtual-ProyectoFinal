@@ -2,14 +2,18 @@ package co.edu.uniquindio.poo.monedero.viewcontrollers;
 
 import co.edu.uniquindio.poo.monedero.controller.MonederoController;
 import co.edu.uniquindio.poo.monedero.app.Aplicacion;
-import javafx.event.ActionEvent;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 import co.edu.uniquindio.poo.monedero.model.Cliente;
+import co.edu.uniquindio.poo.monedero.exceptions.DatoInvalidoException;
+import co.edu.uniquindio.poo.monedero.exceptions.SaldoInsuficienteException;
+import co.edu.uniquindio.poo.monedero.exceptions.CuentaNoEncontradaException;
 import co.edu.uniquindio.poo.monedero.model.Monedero;
 import co.edu.uniquindio.poo.monedero.model.MovimientoPuntos;
-import co.edu.uniquindio.poo.monedero.model.Retiro;
 import co.edu.uniquindio.poo.monedero.model.Transaccion;
 import co.edu.uniquindio.poo.monedero.model.TransaccionProgramada;
-import co.edu.uniquindio.poo.monedero.model.Transferencia;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -20,7 +24,7 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 
 public class MonederoViewController {
-    private Aplicacion aplicacion;
+    private final ObservableList<Transaccion> listaTransacciones = FXCollections.observableArrayList();
     private MonederoController monederoController;
     @FXML private TextField txtNombreMonedero, txtMonto, txtCodigo, txtCodigoProgramada;
     @FXML private ComboBox<Cliente> cmbCliente, cmbDestinatario;
@@ -28,9 +32,25 @@ public class MonederoViewController {
     @FXML private ComboBox<String> cmbFrecuencia, cmbTipoProgramada;
     @FXML private DatePicker dpFecha;
     @FXML private TextArea txtSalida;
-    @FXML private Label lblResumen;
+    @FXML private Label lblSaldo;
+    @FXML private Label lblPuntos;
+    @FXML private Label lblRango;
+    @FXML private TableView<Transaccion> tblTransacciones;
+    @FXML private TableColumn<Transaccion, String> tbcCodigo;
+    @FXML private TableColumn<Transaccion, String> tbcFecha;
+    @FXML private TableColumn<Transaccion, String> tbcTipo;
+    @FXML private TableColumn<Transaccion, String> tbcMonto;
+    @FXML private TableColumn<Transaccion, String> tbcComision;
+    @FXML private TableColumn<Transaccion, String> tbcEstado;
 
-    @FXML public void initialize() {
+    @FXML
+    void initialize() {
+        monederoController = new MonederoController(Aplicacion.monederoVirtual);
+        initDataBinding();
+        tblTransacciones.setItems(listaTransacciones);
+        tblTransacciones.getSelectionModel().selectedItemProperty().addListener((obs, anterior, actual) -> {
+            if (actual != null) txtCodigo.setText(String.valueOf(actual.getCodigo()));
+        });
         dpFecha.setValue(LocalDate.now());
         cmbFrecuencia.setItems(FXCollections.observableArrayList("Única", "Semanal", "Mensual"));
         cmbFrecuencia.getSelectionModel().selectFirst();
@@ -38,18 +58,34 @@ public class MonederoViewController {
         cmbTipoProgramada.getSelectionModel().selectFirst();
         cmbCliente.setOnAction(event -> actualizarMonederos());
         cmbDestinatario.setOnAction(event -> actualizarDestino());
-        txtSalida.setText("Selecciona un cliente registrado en la pantalla Clientes.\nLas operaciones usan el cliente y el monedero seleccionados arriba.");
+        cmbMonedero.setOnAction(event -> actualizarResumen());
+        actualizarDatos();
     }
 
-    public void setApp(Aplicacion aplicacion) {
-        this.aplicacion = aplicacion;
-        this.monederoController = new MonederoController(Aplicacion.monederoVirtual);
+    public void actualizarDatos() {
         refrescar();
+        if (monederoController.obtenerClientes().isEmpty()) {
+            txtSalida.setText("Registre un cliente en Clientes para realizar un depósito.");
+        } else if (txtSalida.getText().startsWith("Registre")) {
+            txtSalida.clear();
+        }
     }
 
-    @FXML
-    void volverEvent(ActionEvent event) {
-        aplicacion.openViewInicio();
+    private void initDataBinding() {
+        tbcCodigo.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getCodigo())));
+        tbcFecha.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getFecha().toLocalDate().toString()));
+        tbcTipo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTipo()));
+        tbcMonto.setCellValueFactory(c -> new SimpleStringProperty(String.format("%.2f", c.getValue().getMonto())));
+        tbcComision.setCellValueFactory(c -> new SimpleStringProperty(String.format("%.2f", c.getValue().getComision())));
+        tbcEstado.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().isRevertida() ? "Revertida" :
+                c.getValue().isSospechosa() ? "Atípica" : "Realizada"));
+    }
+
+    private void cargarTransacciones() {
+        Cliente cliente = clienteActivo();
+        listaTransacciones.clear();
+        if (cliente != null) listaTransacciones.addAll(cliente.getHistorial());
+        tblTransacciones.refresh();
     }
 
     private void refrescar() {
@@ -61,6 +97,8 @@ public class MonederoViewController {
         Monedero receptorMonedero = cmbMonederoDestino.getValue();
         cmbCliente.setItems(FXCollections.observableArrayList(monederoController.obtenerClientes()));
         cmbDestinatario.setItems(FXCollections.observableArrayList(monederoController.obtenerClientes()));
+        if (actual == null && !monederoController.obtenerClientes().isEmpty())
+            actual = monederoController.obtenerClientes().get(0);
         cmbCliente.setValue(actual);
         cmbDestinatario.setValue(receptor);
         actualizarMonederos();
@@ -68,6 +106,7 @@ public class MonederoViewController {
         if (actual != null && actual.getMonederos().contains(actualMonedero)) cmbMonedero.setValue(actualMonedero);
         if (receptor != null && receptor.getMonederos().contains(receptorMonedero)) cmbMonederoDestino.setValue(receptorMonedero);
         actualizarResumen();
+        cargarTransacciones();
     }
 
     private void actualizarMonederos() {
@@ -81,6 +120,7 @@ public class MonederoViewController {
             cmbMonedero.getSelectionModel().selectFirst();
         }
         actualizarResumen();
+        cargarTransacciones();
     }
 
     private void actualizarDestino() {
@@ -96,12 +136,11 @@ public class MonederoViewController {
     }
 
     private void actualizarResumen() {
-        Cliente c = cmbCliente.getValue();
-        if (c == null) { lblResumen.setText("Selecciona un cliente para comenzar."); return; }
-        double total = 0;
-        for (Monedero m : c.getMonederos()) total += m.getSaldo();
-        lblResumen.setText("Saldo total: $" + String.format("%.2f", total) +
-            "     Puntos: " + c.getPuntos() + "     Rango: " + c.getRango());
+        Cliente cliente = cmbCliente.getValue();
+        Monedero monedero = cmbMonedero.getValue();
+        lblSaldo.setText("Saldo: $" + String.format("%.2f", monedero == null ? 0 : monedero.getSaldo()));
+        lblPuntos.setText("Puntos: " + (cliente == null ? 0 : cliente.getPuntos()));
+        lblRango.setText("Rango: " + (cliente == null ? "-" : cliente.getRango()));
     }
 
     private Cliente clienteActivo() {
@@ -113,7 +152,7 @@ public class MonederoViewController {
     }
 
     private double leerMonto() {
-        return Double.parseDouble(txtMonto.getText().trim());
+        return Double.parseDouble(txtMonto.getText().trim().replace(',', '.'));
     }
 
     private int leerCodigo(TextField campo) {
@@ -126,39 +165,44 @@ public class MonederoViewController {
     }
 
     @FXML
-    void registrarMonederoEvent(ActionEvent event) {
+    void registrarMonedero() {
         try {
             Monedero nuevo = monederoController.registrarMonedero(clienteActivo(), txtNombreMonedero.getText());
             refrescar(); cmbMonedero.setValue(nuevo); txtSalida.setText("Monedero creado: " + nuevo);
-        } catch (Exception e) { mensajeError(e); }
+        } catch (DatoInvalidoException e) { mensajeError(e); }
     }
 
     @FXML
-    void depositarEvent(ActionEvent event) {
+    void depositar() {
+        if (clienteActivo() == null || monederoActivo() == null) {
+            txtSalida.setText("Registre un cliente y seleccione un monedero para depositar dinero.");
+            return;
+        }
         try {
             Transaccion t = monederoController.depositar(clienteActivo(), monederoActivo(), leerMonto());
-            refrescar(); txtSalida.setText("Depósito realizado.\n" + t);
-        } catch (Exception e) { mensajeError(e); }
+            refrescar();
+            txtSalida.setText("Depósito realizado. Saldo: $" + String.format("%.2f", monederoActivo().getSaldo()));
+        } catch (DatoInvalidoException | NumberFormatException e) { mensajeError(e); }
     }
 
     @FXML
-    void retirarEvent(ActionEvent event) {
+    void retirar() {
         try {
             Transaccion t = monederoController.retirar(clienteActivo(), monederoActivo(), leerMonto());
             refrescar(); txtSalida.setText("Retiro realizado.\n" + t);
-        } catch (Exception e) { mensajeError(e); }
+        } catch (DatoInvalidoException | SaldoInsuficienteException | NumberFormatException e) { mensajeError(e); }
     }
 
     @FXML
-    void transferirEvent(ActionEvent event) {
+    void transferir() {
         try {
             Transaccion t = monederoController.transferir(clienteActivo(), monederoActivo(), cmbDestinatario.getValue(), cmbMonederoDestino.getValue(), leerMonto());
             refrescar(); txtSalida.setText("Transferencia realizada.\n" + t);
-        } catch (Exception e) { mensajeError(e); }
+        } catch (DatoInvalidoException | SaldoInsuficienteException | NumberFormatException e) { mensajeError(e); }
     }
 
     @FXML
-    void historialEvent(ActionEvent event) {
+    void historial() {
         Cliente c = clienteActivo();
         if (c == null) { txtSalida.setText("Selecciona un cliente."); return; }
         String texto = "HISTORIAL DE " + c.getNombre() + "\n";
@@ -167,7 +211,7 @@ public class MonederoViewController {
     }
 
     @FXML
-    void historialPuntosEvent(ActionEvent event) {
+    void historialPuntos() {
         Cliente c = clienteActivo();
         if (c == null) { txtSalida.setText("Selecciona un cliente."); return; }
         String texto = "MOVIMIENTOS DE PUNTOS\n";
@@ -176,31 +220,31 @@ public class MonederoViewController {
     }
 
     @FXML
-    void revertirEvent(ActionEvent event) {
+    void revertir() {
         try {
             monederoController.revertir(clienteActivo(), leerCodigo(txtCodigo));
             refrescar(); txtSalida.setText("Transacción revertida y puntos recalculados.");
-        } catch (Exception e) { mensajeError(e); }
+        } catch (DatoInvalidoException | SaldoInsuficienteException | CuentaNoEncontradaException | NumberFormatException e) { mensajeError(e); }
     }
 
     @FXML
-    void reporteEvent(ActionEvent event) {
+    void reporte() {
         try { txtSalida.setText(monederoController.reporte(clienteActivo())); }
-        catch (Exception e) { mensajeError(e); }
+        catch (DatoInvalidoException e) { mensajeError(e); }
     }
 
     @FXML
-    void canjear100Event(ActionEvent event) {
+    void canjear100() {
         canjear(100);
     }
 
     @FXML
-    void canjear500Event(ActionEvent event) {
+    void canjear500() {
         canjear(500);
     }
 
     @FXML
-    void canjear1000Event(ActionEvent event) {
+    void canjear1000() {
         canjear(1000);
     }
 
@@ -208,42 +252,42 @@ public class MonederoViewController {
         try {
             monederoController.canjear(clienteActivo(), monederoActivo(), puntos);
             refrescar(); txtSalida.setText("Beneficio canjeado por " + puntos + " puntos.");
-        } catch (Exception e) { mensajeError(e); }
+        } catch (DatoInvalidoException e) { mensajeError(e); }
     }
 
     @FXML
-    void programarEvent(ActionEvent event) {
+    void programar() {
         try {
             TransaccionProgramada p = monederoController.programar(cmbTipoProgramada.getValue(), clienteActivo(),
                 monederoActivo(), cmbDestinatario.getValue(), cmbMonederoDestino.getValue(), leerMonto(),
                 dpFecha.getValue(), cmbFrecuencia.getValue());
             txtSalida.setText("Programación guardada: " + p);
-        } catch (Exception e) { mensajeError(e); }
+        } catch (DatoInvalidoException | NumberFormatException e) { mensajeError(e); }
     }
 
     @FXML
-    void ejecutarProgramadasEvent(ActionEvent event) {
+    void ejecutarProgramadas() {
         txtSalida.setText(monederoController.ejecutarPendientes(LocalDate.now())); refrescar();
     }
 
     @FXML
-    void verProgramadasEvent(ActionEvent event) {
+    void verProgramadas() {
         String texto = "OPERACIONES PROGRAMADAS\n";
         for (TransaccionProgramada p : monederoController.obtenerProgramadas()) texto += p + "\n";
         txtSalida.setText(texto);
     }
 
     @FXML
-    void cancelarProgramadaEvent(ActionEvent event) {
+    void cancelarProgramada() {
         try {
             monederoController.cancelarProgramada(leerCodigo(txtCodigoProgramada));
             txtSalida.setText("Operación programada cancelada.");
-        } catch (Exception e) { mensajeError(e); }
+        } catch (CuentaNoEncontradaException | NumberFormatException e) { mensajeError(e); }
     }
 
     @FXML
-    void verNotificacionesEvent(ActionEvent event) {
-        String texto = "NOTIFICACIONES DEL SIMULADOR\n";
+    void verNotificaciones() {
+        String texto = "NOTIFICACIONES\n";
         for (String aviso : monederoController.obtenerNotificaciones()) texto += aviso + "\n";
         txtSalida.setText(texto);
     }

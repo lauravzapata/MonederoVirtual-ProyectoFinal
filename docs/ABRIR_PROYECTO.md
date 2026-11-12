@@ -18,13 +18,14 @@ En Linux/macOS:
 ./mvnw clean javafx:run
 ```
 
-Se debe abrir la pantalla azul oscuro y verde menta con los accesos Clientes y Monedero. Registra primero un cliente desde Clientes; luego vuelve al inicio y abre Monedero.
+Se debe abrir Inicio con Clientes, Depositar dinero y Monedero. En Clientes registra documento y nombre; abre la pestaña Monedero, escribe el monto y pulsa Depositar dinero. El saldo se actualiza en esa misma pantalla.
 
 ## Archivos que deben corresponder
 
-- `app/Aplicacion.java`: carga el FXML, obtiene su controlador y llama a `setApp(this)`.
-- `viewcontrollers/InicioViewController.java`: contiene `abrirClientesEvent` y `abrirMonederoEvent`.
-- `viewcontrollers/ClienteViewController.java` y `MonederoViewController.java`: atienden los eventos de cada pantalla.
-- `src/main/resources/co/edu/uniquindio/poo/monedero/`: contiene los tres FXML completos, incluidos los controles.
+- `app/Aplicacion.java`: carga Inicio y Gestión, obtiene sus controladores y llama a `setApp(this)`.
+- `viewcontrollers/InicioViewController.java`: eventos `abrirClientes` y `abrirMonedero`.
+- `viewcontrollers/GestionViewController.java`: carga Clientes y Monedero en las pestañas.
+- `viewcontrollers/ClienteViewController.java` y `MonederoViewController.java`: formularios y tablas con el modelo compartido.
+- `src/main/resources/co/edu/uniquindio/poo/monedero/`: los cuatro FXML completos.
 
 Cambiar únicamente `fx:controller` en una plantilla vacía no agrega los botones. Copiar un FXML sin su controlador actualizado puede causar errores al cargarlo o al pulsar sus controles. Si falla esta copia completa, conserva el mensaje completo de la consola para identificar el archivo y la línea del error.

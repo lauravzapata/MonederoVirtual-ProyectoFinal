@@ -1,68 +1,67 @@
-OK: Inicio sin clientes ficticios
-OK: Inicio sin monederos ficticios
-OK: Saldo inicial real
-OK: Navega botón btnClientesMenu
-OK: Regresa desde btnClientesMenu
-OK: Navega botón btnClientesTarjeta
-OK: Regresa desde btnClientesTarjeta
-OK: Navega botón btnMonederoMenu
-OK: Regresa desde btnMonederoMenu
-OK: Navega botón btnMonederoPrincipal
-OK: Regresa desde btnMonederoPrincipal
-OK: Navega botón btnMonederoTarjeta
-OK: Regresa desde btnMonederoTarjeta
-OK: FXML y tres pestañas cargan
-OK: Mensaje: cliente válido (recibido: Aviso: Selecciona un cliente válido.)
-OK: Mensaje: Selecciona un cliente (recibido: Selecciona un cliente.)
-OK: Mensaje: cliente válido (recibido: Aviso: Selecciona un cliente válido.)
-OK: Mensaje: cliente válido (recibido: Aviso: Selecciona un cliente válido.)
-OK: Mensaje: Cliente registrado (recibido: Cliente registrado: Ana (101))
-OK: Mensaje: Cliente registrado (recibido: Cliente registrado: Luis (102))
-OK: Mensaje: Monedero creado (recibido: Monedero creado: Ahorros ($0.00))
-OK: Depósito en Ahorros
-OK: Conserva monedero tras operación
-OK: Mensaje: Transferencia realizada (recibido: Transferencia realizada. #3 | 2026-11-12 | Transferencia | $200.00 | Comisión: $2.00 | Para: Luis)
-OK: Saldo del emisor con comisión
-OK: Saldo del receptor
-OK: Mensaje: Transferencia recibida (recibido: HISTORIAL DE Luis #3 | 2026-11-12 | Transferencia recibida | $200.00 | Comisión: $0.00 )
-OK: Mensaje: Transacción revertida (recibido: Transacción revertida y puntos recalculados.)
-OK: Reversión restaura ambos saldos
-OK: Mensaje: ya fue revertida (recibido: Aviso: Esa transacción ya fue revertida.)
-OK: Mensaje: número válido (recibido: Ingresa un número válido para el monto o código.)
-OK: Mensaje: saldo suficiente (recibido: Aviso: No hay saldo suficiente en Principal.)
-OK: Mensaje: Nombre actualizado (recibido: Nombre actualizado correctamente.)
-OK: Edición del cliente
-OK: Mensaje: Retiro realizado (recibido: Retiro realizado. #4 | 2026-11-12 | Retiro | $100.00 | Comisión: $1.00)
-OK: Mensaje: Total de gastos (recibido: REPORTE DE Ana María Depósitos: $1100.00 Retiros: $100.00 Transferencias: $0.00 Total de gastos: $101.00 Comisiones: $1.00 Transferencias recibidas: $0.00 Gasto promedio por operación: $101.00 Mayor gasto: $101.00 Patrón predominante: Retiros Alertas: 0 Puntos actuales: 13 Rango: Bronce)
-OK: Mensaje: Comisiones (recibido: REPORTE DE Ana María Depósitos: $1100.00 Retiros: $100.00 Transferencias: $0.00 Total de gastos: $101.00 Comisiones: $1.00 Transferencias recibidas: $0.00 Gasto promedio por operación: $101.00 Mayor gasto: $101.00 Patrón predominante: Retiros Alertas: 0 Puntos actuales: 13 Rango: Bronce)
-OK: Mensaje: suficientes puntos (recibido: Aviso: No tienes suficientes puntos.)
-OK: Mensaje: Beneficio canjeado (recibido: Beneficio canjeado por 100 puntos.)
-OK: Mensaje: Ya tienes activo (recibido: Aviso: Ya tienes activo el descuento permanente.)
-OK: Mensaje: Beneficio canjeado (recibido: Beneficio canjeado por 500 puntos.)
-OK: Mensaje: Beneficio canjeado (recibido: Beneficio canjeado por 1000 puntos.)
-OK: Bono suma 50
-OK: Mensaje: Canje de beneficio (recibido: MOVIMIENTOS DE PUNTOS 2026-11-12 | Transacción #1 | 1 puntos 2026-11-12 | Transacción #2 | 10 puntos 2026-11-12 | Transacción #3 | 6 puntos 2026-11-12 | Reversión #3 | -6 puntos 2026-11-12 | Transacción #4 | 2 puntos 2026-11-12 | Transacción #5 | 2000 puntos 2026-11-12 | Canje de beneficio | -100 puntos 2026-11-12 | Canje de beneficio | -500 puntos 2026-11-12 | Canje de beneficio | -1000 puntos )
-OK: Mensaje: Comisión: $0.00 (recibido: Retiro realizado. #6 | 2026-11-12 | Retiro | $100.00 | Comisión: $0.00)
-OK: Mensaje: Programación guardada (recibido: Programación guardada: #1 | Depósito | Ana María | $50.0 | Próxima: 2026-11-12 | Única | Ejecutadas: 0)
-OK: Mensaje: #1 (recibido: OPERACIONES PROGRAMADAS #1 | Depósito | Ana María | $50.0 | Próxima: 2026-11-12 | Única | Ejecutadas: 0 )
-OK: Mensaje: realizadas: 1 (recibido: Operaciones realizadas: 1 | Fallidas: 0)
-OK: Mensaje: realizadas: 0 (recibido: Operaciones realizadas: 0 | Fallidas: 0)
-OK: Mensaje: Programación guardada (recibido: Programación guardada: #2 | Transferencia | Ana María | $50.0 | Próxima: 2026-11-13 | Semanal | Ejecutadas: 0)
-OK: Mensaje: cancelada (recibido: Operación programada cancelada.)
-OK: Mensaje: No existe (recibido: Aviso: No existe esa operación programada.)
-OK: Mensaje: Transferencia recibida (recibido: NOTIFICACIONES DEL SIMULADOR Transferencia recibida: Luis / $200.0 ALERTA para Ana María: operación atípica #5 Recordatorio: Ana María programó una operación para 2026-11-12 Recordatorio: Ana María programó una operación para 2026-11-13 )
-OK: Mensaje: Recordatorio (recibido: NOTIFICACIONES DEL SIMULADOR Transferencia recibida: Luis / $200.0 ALERTA para Ana María: operación atípica #5 Recordatorio: Ana María programó una operación para 2026-11-12 Recordatorio: Ana María programó una operación para 2026-11-13 )
-OK: Clientes conserva modelo compartido
-OK: Mensaje: Cliente registrado (recibido: Cliente registrado: Temporal (999))
-OK: Mensaje: Cliente eliminado (recibido: Cliente eliminado.)
-OK: Limpia cliente eliminado
-OK: Mensaje: No se elimina un cliente con historial (recibido: No se elimina un cliente con historial financiero.)
-OK: No ofrece destinatario eliminado
-OK: Sin destino seleccionado al abrir pantalla
-OK: Sin monedero seleccionado al abrir pantalla
-OK: Resumen recupera los datos compartidos
-OK: Saldo se conserva al volver al inicio
-OK: Resumen cuenta clientes actuales
-OK: Resumen cuenta monederos actuales
-OK: Resumen de saldo usa valores reales
-INTERFAZ: 67 comprobaciones aprobadas
+OK: Inicio con opciones básicas
+OK: Acceso directo a depósitos
+OK: Depositar dinero visible y habilitado dentro de la ventana
+OK: Campo Monto visible en operaciones
+OK: Mensaje: Registre un cliente (Registre un cliente y seleccione un monedero para depositar dinero.)
+OK: Mensaje: Cliente registrado (Cliente registrado: Ana (101))
+OK: Cliente aparece en tabla
+OK: Registro crea monedero Principal
+OK: Cliente preseleccionado al entrar a depósitos
+OK: Monedero Principal seleccionado
+OK: Saldo inicial visible
+OK: Mensaje: Depósito realizado (Depósito realizado. Saldo: $1000.00)
+OK: Depósito agrega dinero al monedero
+OK: Saldo se actualiza en pantalla después del depósito
+OK: Puntos del depósito visibles
+OK: Depósito en tabla de transacciones
+OK: Tabla de clientes actualiza puntos al cambiar de pestaña
+OK: Mensaje: Cliente registrado (Cliente registrado: Luis (102))
+OK: Selección de tabla protege documento
+OK: Mensaje: Cliente actualizado (Cliente actualizado.)
+OK: Actualización por selección de tabla
+OK: Limpiar restablece formulario
+OK: Mensaje: Cliente registrado (Cliente registrado: Temporal (999))
+OK: Mensaje: Cliente eliminado (Cliente eliminado.)
+OK: Eliminación sin movimientos
+OK: Mensaje: No se elimina un cliente con historial (No se elimina un cliente con historial financiero.)
+OK: Mensaje: Transferencia realizada (Transferencia realizada. #2 | 2026-11-12 | Transferencia | $200.00 | Comisión: $2.00 | Para: Luis)
+OK: Transferencia mueve saldos y comisión
+OK: Seleccionar transacción completa código de reversión
+OK: Mensaje: Transacción revertida (Transacción revertida y puntos recalculados.)
+OK: Reversión restaura saldos
+OK: Receptor ve historial
+OK: Mensaje: Monedero creado (Monedero creado: Ahorros ($0.00))
+OK: Saldo corresponde al monedero seleccionado
+OK: Depósito acepta coma decimal
+OK: Saldo de Ahorros visible
+OK: Cambiar monedero actualiza saldo
+OK: Mensaje: número válido (Ingresa un número válido para el monto o código.)
+OK: Mensaje: centavo (Aviso: Ingresa un monto desde un centavo y hasta mil millones.)
+OK: Mensaje: saldo suficiente (Aviso: No hay saldo suficiente en Principal.)
+OK: Mensaje: Retiro realizado (Retiro realizado. #4 | 2026-11-12 | Retiro | $100.00 | Comisión: $1.00)
+OK: Depositar dinero visible y habilitado dentro de la ventana
+OK: Campo Monto visible en operaciones
+OK: Mensaje: suficientes puntos (Aviso: No tienes suficientes puntos.)
+OK: Mensaje: Depósito realizado (Depósito realizado. Saldo: $200899.00)
+OK: Mensaje: Beneficio canjeado (Beneficio canjeado por 100 puntos.)
+OK: Mensaje: Ya tienes activo (Aviso: Ya tienes activo el descuento permanente.)
+OK: Mensaje: Beneficio canjeado (Beneficio canjeado por 500 puntos.)
+OK: Bono de canje
+OK: Mensaje: Canje de beneficio (MOVIMIENTOS DE PUNTOS 2026-11-12 | Transacción #1 | 10 puntos 2026-11-12 | Transacción #2 | 6 puntos 2026-11-12 | Reversión #2 | -6 puntos 2026-11-12 | Transacción #3 | 0 puntos 2026-11-12 | Transacción #4 | 2 puntos 2026-11-12 | Transacción #5 | 2000 puntos 2026-11-12 | Canje de beneficio | -100 puntos 2026-11-12 | Canje de beneficio | -500 puntos 2026-11-12 | Canje de beneficio | -1000 puntos )
+OK: Mensaje: Comisión: $0.00 (Retiro realizado. #6 | 2026-11-12 | Retiro | $100.00 | Comisión: $0.00)
+OK: Depositar dinero visible y habilitado dentro de la ventana
+OK: Campo Monto visible en operaciones
+OK: Mensaje: Programación guardada (Programación guardada: #1 | Depósito | Ana María | $50.0 | Próxima: 2026-11-12 | Única | Ejecutadas: 0)
+OK: Mensaje: realizadas: 1 (Operaciones realizadas: 1 | Fallidas: 0)
+OK: Mensaje: realizadas: 0 (Operaciones realizadas: 0 | Fallidas: 0)
+OK: Mensaje: Programación guardada (Programación guardada: #2 | Depósito | Ana María | $50.0 | Próxima: 2026-11-13 | Única | Ejecutadas: 0)
+OK: Mensaje: cancelada (Operación programada cancelada.)
+OK: Depositar dinero visible y habilitado dentro de la ventana
+OK: Campo Monto visible en operaciones
+OK: Mensaje: Total de gastos (REPORTE DE Ana María Depósitos: $201075.50 Retiros: $200.00 Transferencias: $0.00 Total de gastos: $201.00 Comisiones: $1.00 Transferencias recibidas: $0.00 Gasto promedio por operación: $100.50 Mayor gasto: $101.00 Patrón predominante: Retiros Alertas: 1 Puntos actuales: 414 Rango: Bronce)
+OK: Mensaje: Recordatorio (NOTIFICACIONES Transferencia recibida: Luis / $200.0 ALERTA para Ana María: operación atípica #5 Recordatorio: Ana María programó una operación para 2026-11-12 Recordatorio: Ana María programó una operación para 2026-11-13 )
+OK: Depositar dinero visible y habilitado dentro de la ventana
+OK: Campo Monto visible en operaciones
+OK: Navegación conserva saldos
+OK: Inicio abre clientes con datos conservados
+INTERFAZ: 66 comprobaciones aprobadas

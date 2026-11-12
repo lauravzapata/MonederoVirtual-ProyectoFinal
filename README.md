@@ -1,80 +1,74 @@
-# ◈ Monedero Virtual
+# Monedero virtual
 
-Proyecto final de Programación I · JavaFX, FXML y programación orientada a objetos.
+Aplicación JavaFX con clientes, depósitos, retiros, transferencias, puntos y transacciones programadas. La estructura y las tablas siguen los archivos adjuntos de panadería.
 
-Un simulador de escritorio para administrar clientes, separar ahorros y gastos, transferir dinero y convertir movimientos en puntos.
+![Monedero](docs/interfaz.png)
 
-![Vista del monedero](docs/interfaz.png)
-
-Otras pantallas: [Inicio](docs/inicio.png) · [Clientes](docs/clientes.png).
-
-[Cómo abrir la versión completa y resolver pantallas vacías](docs/ABRIR_PROYECTO.md).
+[Inicio](docs/inicio.png) · [Clientes](docs/clientes.png) · [Guía para abrir el proyecto](docs/ABRIR_PROYECTO.md)
 
 ## Ejecutar
 
-Requisito: **JDK 21** (incluye compilador), conexión para la primera descarga y un escritorio gráfico.
+Abre `pom.xml` como proyecto Maven en IntelliJ. Selecciona **JDK 21** para el proyecto y Maven.
 
-Abre `pom.xml` como proyecto Maven en IntelliJ IDEA y selecciona JDK 21 para el proyecto y Maven. Desde la carpeta del proyecto:
-
-```bash
-# Linux y macOS
-./mvnw clean javafx:run
-./mvnw test
-```
+Windows:
 
 ```powershell
-# Windows
 .\mvnw.cmd clean javafx:run
 .\mvnw.cmd test
 ```
 
-También puedes usar `mvn` si tienes Maven instalado. No hace falta descargar JavaFX manualmente: el `pom.xml` usa la misma versión 21.0.6 del ejemplo docente `empresa`.
+Linux/macOS:
 
-## Recorrido de demostración
-
-1. En Inicio entra a **Clientes** y registra a Ana (101) y Luis (102). Pulsa **Volver al inicio**, abre **Monedero** y selecciona Ana como cliente.
-2. Deposita 1000: aparecen saldo 1000, 10 puntos y rango Bronce.
-3. Selecciona Luis y su monedero como destino. Transfiere 200: Ana queda con 798 y Luis recibe 200. La comisión es 2.
-4. Selecciona Luis y consulta su historial: aparece la transferencia recibida sin puntos adicionales.
-5. Regresa a Ana. Usa el código de transferencia para revertirla: se restauran el dinero y los puntos; ambos historiales reflejan la reversión.
-6. Crea un monedero Ahorros y realiza un depósito en él. Cambia entre monederos para consultar sus saldos.
-7. Para probar una alerta atípica con un cliente nuevo, deposita 100 dos veces y después 1000. Revisa el historial y las notificaciones.
-8. En Programadas selecciona depósito, fecha de hoy y frecuencia semanal. El monto se toma de Movimientos. Pulsa Ejecutar vencidas; una segunda pulsación el mismo día no repite el movimiento.
-9. Para demostrar beneficios rápidamente, deposita 200000 en un cliente de prueba y revisa Puntos y beneficios.
-
-## Organización, como en `ParcialPanaderia3` y el ejemplo docente `empresa`
-
-```text
-src/main/java/
-├── module-info.java
-└── co/edu/uniquindio/poo/monedero/
-    ├── app/Aplicacion.java
-    ├── model/MonederoVirtual.java   ← listas, reglas y validaciones
-    ├── model/                      ← Cliente, Monedero y transacciones
-    ├── controller/
-    │   ├── ClienteController.java   ← delega en MonederoVirtual
-    │   └── MonederoController.java  ← delega en MonederoVirtual
-    ├── viewcontrollers/
-    │   ├── InicioViewController.java
-    │   ├── ClienteViewController.java
-    │   └── MonederoViewController.java
-    └── exceptions/                 ← tres excepciones personalizadas
-src/main/resources/co/edu/uniquindio/poo/monedero/
-├── inicio.fxml
-├── clientes.fxml
-└── monedero.fxml
-src/test/java/co/edu/uniquindio/poo/monedero/
-├── model/                          ← pruebas de reglas del negocio
-└── controller/                     ← prueba de modelo compartido
+```bash
+./mvnw clean javafx:run
+./mvnw test
 ```
 
-`MonederoVirtual` cumple el papel de `Panaderia`: conserva listas y ejecuta las reglas. `ClienteController` y `MonederoController` reciben ese modelo en su constructor y delegan en él. `Aplicacion` carga cada FXML con `FXMLLoader`, obtiene el controlador de vista y llama a `setApp(this)`. Las tres pantallas comparten la misma instancia, por lo que navegar no reinicia los saldos.
+## Ingresar dinero
 
-Los eventos se llaman `registrarClienteEvent`, `depositarEvent`, `volverEvent`, etc. Los controles usan los prefijos del parcial: `txtDocumento`, `txtMonto`, `cmbCliente`, `lblResultado`. Las listas se protegen con `Collections.unmodifiableList`, como en `Panaderia`.
+1. Abre **Clientes** y registra documento y nombre.
+2. En la misma ventana, abre la pestaña **Monedero**. Se seleccionan el primer cliente disponible y su monedero Principal; puedes elegir otro cliente o monedero.
+3. Escribe el monto en **Depósitos y retiros** y pulsa **Depositar dinero**.
+4. El saldo mostrado corresponde al monedero seleccionado. El depósito aparece en la tabla de Historial y genera puntos.
 
-Se emplean clases, herencia, interfaz `IOperacion`, listas `List`/`ArrayList`, ciclos, condicionales, excepciones, lambda, Stream API, JavaFX y FXML. No se añadieron frameworks de backend, base de datos ni librerías de diseño. La apariencia utiliza propiedades y controles FXML, sin CSS. Los Streams y las tres excepciones personalizadas se mantienen porque el Word los exige.
+También hay un acceso **Depositar dinero** desde Inicio. Si no hay clientes registrados, el resultado indica que debes registrar uno. El botón de depósito y el monto permanecen visibles en todas las pestañas de operaciones. Los decimales admiten punto o coma, sin separadores de miles.
 
-Consulta la [relación con los ejemplos y el Word](docs/ESTRUCTURA_DEL_CURSO.md) para ubicar cada concepto.
+## Recorrido de las operaciones
+
+- **Clientes:** registrar; seleccionar una fila para actualizar el nombre o eliminar; Limpiar para ingresar otro cliente. El documento no se modifica.
+- **Monedero:** seleccionar cliente y monedero, crear otro monedero y consultar saldo, puntos y rango.
+- **Depósitos y retiros:** escribir el monto y pulsar Depositar dinero o Retirar.
+- **Transferencias:** usar el mismo monto; elegir cliente y monedero de destino y pulsar Transferir.
+- **Historial:** seleccionar una fila para completar el código de reversión y pulsar Revertir transacción.
+- **Puntos y beneficios:** canjear 100, 500 o 1000 puntos, o consultar el historial de puntos.
+- **Programadas:** usar monto y destino de los campos superiores; elegir tipo, fecha y frecuencia. Pulsar Ejecutar vencidas para procesarlas.
+- **Reportes:** consultar gastos y notificaciones.
+
+Ejemplo: deposita 1000 en Ana (101), transfiere 200 a Luis (102) y comprueba los saldos 798 y 200, incluida comisión de 2. Revierte la transferencia desde Ana para restaurar ambos saldos.
+
+## Organización
+
+```text
+src/main/java/co/edu/uniquindio/poo/monedero/
+├── app/Aplicacion.java
+├── model/                  MonederoVirtual y entidades
+├── controller/             ClienteController y MonederoController
+├── viewcontrollers/
+│   ├── InicioViewController.java
+│   ├── GestionViewController.java
+│   ├── ClienteViewController.java
+│   └── MonederoViewController.java
+└── exceptions/             Tres excepciones del negocio
+src/main/resources/co/edu/uniquindio/poo/monedero/
+├── inicio.fxml
+├── gestion.fxml
+├── clientes.fxml
+└── monedero.fxml
+```
+
+`Aplicacion` conserva el modelo compartido. `GestionViewController` carga dos FXML dentro de pestañas, como el archivo adjunto del mismo nombre. Los controladores de las tablas se inicializan con el modelo de la aplicación. `initDataBinding`, `listenerSelection`, `ObservableList`, `TableView`, `SimpleStringProperty`, `setCellValueFactory` y `actualizarTabla` siguen los patrones de `EmpleadoViewController` y `PedidoViewController` adjuntos.
+
+Las reglas permanecen en `MonederoVirtual`; los controladores delegan en el modelo. Se mantienen las lambdas, Streams, excepciones personalizadas y POO exigidos en el Word. La interfaz usa controles FXML sencillos y textos funcionales.
 
 ## Reglas definidas
 

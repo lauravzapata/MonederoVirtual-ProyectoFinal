@@ -1,316 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.ClienteViewController" prefWidth="1120" prefHeight="840">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.ClienteViewController" prefWidth="1080" prefHeight="720">
     <children>
-        <BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-            <background>
-                <Background>
-                    <fills>
-                        <BackgroundFill fill="#f3f5f8">
-                            <radii>
-                                <CornerRadii radius="0"/>
-                            </radii>
-                            <insets>
-                                <Insets/>
-                            </insets>
-                        </BackgroundFill>
-                    </fills>
-                </Background>
-            </background>
-            <center>
-                <VBox spacing="20">
-                    <padding>
-                        <Insets top="28" right="28" bottom="28" left="28"/>
-                    </padding>
-                    <HBox spacing="14" alignment="CENTER_LEFT">
-                        <VBox spacing="12">
-                            <background>
-                                <Background>
-                                    <fills>
-                                        <BackgroundFill fill="#18243d">
-                                            <radii>
-                                                <CornerRadii radius="12"/>
-                                            </radii>
-                                            <insets>
-                                                <Insets/>
-                                            </insets>
-                                        </BackgroundFill>
-                                    </fills>
-                                </Background>
-                            </background>
-                            <padding>
-                                <Insets top="10" right="10" bottom="10" left="10"/>
-                            </padding>
-                            <Label text="MV" textFill="white" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="17"/>
-                                </font>
-                            </Label>
-                        </VBox>
-                        <VBox spacing="3">
-                            <Label text="Clientes" textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="25"/>
-                                </font>
-                            </Label>
-                            <Label text="Administra las personas que usan tu monedero." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System" size="12"/>
-                                </font>
-                            </Label>
-                        </VBox>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Button text="Volver al inicio" onAction="#volverEvent" minHeight="40" textFill="#18243d">
-                            <background>
-                                <Background>
-                                    <fills>
-                                        <BackgroundFill fill="#e8edf3">
-                                            <radii>
-                                                <CornerRadii radius="10"/>
-                                            </radii>
-                                            <insets>
-                                                <Insets/>
-                                            </insets>
-                                        </BackgroundFill>
-                                    </fills>
-                                </Background>
-                            </background>
-                            <padding>
-                                <Insets top="10" right="18" bottom="10" left="18"/>
-                            </padding>
-                            <font>
-                                <Font name="System Bold" size="13"/>
-                            </font>
-                        </Button>
-                    </HBox>
-                    <HBox spacing="20" alignment="CENTER_LEFT">
-                        <VBox spacing="12" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-                            <background>
-                                <Background>
-                                    <fills>
-                                        <BackgroundFill fill="white">
-                                            <radii>
-                                                <CornerRadii radius="16"/>
-                                            </radii>
-                                            <insets>
-                                                <Insets/>
-                                            </insets>
-                                        </BackgroundFill>
-                                    </fills>
-                                </Background>
-                            </background>
-                            <padding>
-                                <Insets top="20" right="20" bottom="20" left="20"/>
-                            </padding>
-                            <Label text="01  /  NUEVO CLIENTE" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="11"/>
-                                </font>
-                            </Label>
-                            <Label text="Crea una cuenta" textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="23"/>
-                                </font>
-                            </Label>
-                            <Label text="Documento" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="12"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="txtDocumento" promptText="Ejemplo: 101" prefWidth="380" minHeight="40"/>
-                            <Label text="Nombre completo" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="12"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="txtNombre" promptText="Nombre del cliente" prefWidth="380" minHeight="40"/>
-                            <Button text="Registrar cliente" onAction="#registrarClienteEvent" minHeight="40" textFill="white">
-                                <background>
-                                    <Background>
-                                        <fills>
-                                            <BackgroundFill fill="#18745b">
-                                                <radii>
-                                                    <CornerRadii radius="10"/>
-                                                </radii>
-                                                <insets>
-                                                    <Insets/>
-                                                </insets>
-                                            </BackgroundFill>
-                                        </fills>
-                                    </Background>
-                                </background>
-                                <padding>
-                                    <Insets top="10" right="18" bottom="10" left="18"/>
-                                </padding>
-                                <font>
-                                    <Font name="System Bold" size="13"/>
-                                </font>
-                            </Button>
-                            <Label text="Para editar un cliente, escribe aquí su nuevo nombre
-y selecciónalo en la tarjeta de al lado." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System" size="12"/>
-                                </font>
-                            </Label>
-                        </VBox>
-                        <VBox spacing="12" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-                            <background>
-                                <Background>
-                                    <fills>
-                                        <BackgroundFill fill="white">
-                                            <radii>
-                                                <CornerRadii radius="16"/>
-                                            </radii>
-                                            <insets>
-                                                <Insets/>
-                                            </insets>
-                                        </BackgroundFill>
-                                    </fills>
-                                </Background>
-                            </background>
-                            <padding>
-                                <Insets top="20" right="20" bottom="20" left="20"/>
-                            </padding>
-                            <Label text="02  /  ADMINISTRAR" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="11"/>
-                                </font>
-                            </Label>
-                            <Label text="Tus clientes" textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="23"/>
-                                </font>
-                            </Label>
-                            <ComboBox fx:id="cmbCliente" promptText="Selecciona un cliente" prefWidth="430" minHeight="40"/>
-                            <HBox spacing="14" alignment="CENTER_LEFT">
-                                <Button text="Editar nombre" onAction="#editarClienteEvent" minHeight="40" textFill="#18243d">
-                                    <background>
-                                        <Background>
-                                            <fills>
-                                                <BackgroundFill fill="#e8edf3">
-                                                    <radii>
-                                                        <CornerRadii radius="10"/>
-                                                    </radii>
-                                                    <insets>
-                                                        <Insets/>
-                                                    </insets>
-                                                </BackgroundFill>
-                                            </fills>
-                                        </Background>
-                                    </background>
-                                    <padding>
-                                        <Insets top="10" right="18" bottom="10" left="18"/>
-                                    </padding>
-                                    <font>
-                                        <Font name="System Bold" size="13"/>
-                                    </font>
-                                </Button>
-                                <Button text="Eliminar cliente" onAction="#eliminarClienteEvent" minHeight="40" textFill="#a53b3b">
-                                    <background>
-                                        <Background>
-                                            <fills>
-                                                <BackgroundFill fill="#fff0ef">
-                                                    <radii>
-                                                        <CornerRadii radius="10"/>
-                                                    </radii>
-                                                    <insets>
-                                                        <Insets/>
-                                                    </insets>
-                                                </BackgroundFill>
-                                            </fills>
-                                        </Background>
-                                    </background>
-                                    <padding>
-                                        <Insets top="10" right="18" bottom="10" left="18"/>
-                                    </padding>
-                                    <font>
-                                        <Font name="System Bold" size="13"/>
-                                    </font>
-                                </Button>
-                            </HBox>
-                            <Label text="Cada cliente recibe un monedero Principal.
-Crea Ahorros y otros desde Monedero." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System" size="13"/>
-                                </font>
-                            </Label>
-                            <Label text="El historial financiero se conserva: no se eliminan
-clientes que ya tengan movimientos." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System" size="12"/>
-                                </font>
-                            </Label>
-                        </VBox>
-                    </HBox>
-                    <VBox spacing="12">
-                        <background>
-                            <Background>
-                                <fills>
-                                    <BackgroundFill fill="#dff8ed">
-                                        <radii>
-                                            <CornerRadii radius="12"/>
-                                        </radii>
-                                        <insets>
-                                            <Insets/>
-                                        </insets>
-                                    </BackgroundFill>
-                                </fills>
-                            </Background>
-                        </background>
-                        <padding>
-                            <Insets top="15" right="15" bottom="15" left="15"/>
-                        </padding>
-                        <Label text="Registra tu primer cliente para comenzar." textFill="#18745b" wrapText="true" fx:id="lblResultado" minHeight="-Infinity" maxWidth="Infinity">
-                            <font>
-                                <Font name="System Bold" size="14"/>
-                            </font>
-                        </Label>
-                    </VBox>
-                    <VBox spacing="12">
-                        <background>
-                            <Background>
-                                <fills>
-                                    <BackgroundFill fill="white">
-                                        <radii>
-                                            <CornerRadii radius="16"/>
-                                        </radii>
-                                        <insets>
-                                            <Insets/>
-                                        </insets>
-                                    </BackgroundFill>
-                                </fills>
-                            </Background>
-                        </background>
-                        <padding>
-                            <Insets top="20" right="20" bottom="20" left="20"/>
-                        </padding>
-                        <HBox spacing="14" alignment="CENTER_LEFT">
-                            <Label text="Clientes registrados" textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System Bold" size="18"/>
-                                </font>
-                            </Label>
-                            <Label text="  /  TU COMUNIDAD" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
-                                <font>
-                                    <Font name="System" size="10"/>
-                                </font>
-                            </Label>
-                        </HBox>
-                        <ScrollPane fitToWidth="true" prefHeight="145">
-                            <content>
-                                <Label text="Todavía no hay clientes registrados." textFill="#18243d" wrapText="true" fx:id="lblClientes" minHeight="-Infinity" maxWidth="Infinity">
-                                    <font>
-                                        <Font name="System" size="15"/>
-                                    </font>
-                                </Label>
-                            </content>
-                        </ScrollPane>
-                    </VBox>
-                </VBox>
-            </center>
-        </BorderPane>
+        <Label text="Gestión de clientes" layoutX="24" layoutY="20" textFill="#315e82">
+            <font>
+                <Font name="System Bold" size="20"/>
+            </font>
+        </Label>
+        <Label text="Documento" layoutX="24" layoutY="70" textFill="#334155">
+            <font>
+                <Font name="System" size="13"/>
+            </font>
+        </Label>
+        <Label text="Nombre" layoutX="300" layoutY="70" textFill="#334155">
+            <font>
+                <Font name="System" size="13"/>
+            </font>
+        </Label>
+        <TextField fx:id="txtDocumento" layoutX="24" layoutY="96" prefWidth="240" prefHeight="34" promptText=""/>
+        <TextField fx:id="txtNombre" layoutX="300" layoutY="96" prefWidth="420" prefHeight="34" promptText=""/>
+        <Button text="Registrar cliente" onAction="#registrarCliente" layoutX="24" layoutY="155" prefWidth="175" prefHeight="34"/>
+        <Button text="Actualizar cliente" onAction="#actualizarCliente" layoutX="215" layoutY="155" prefWidth="175" prefHeight="34"/>
+        <Button text="Eliminar cliente" onAction="#eliminarCliente" layoutX="405" layoutY="155" prefWidth="175" prefHeight="34"/>
+        <Button text="Limpiar" onAction="#limpiarCampos" layoutX="595" layoutY="155" prefWidth="125" prefHeight="34"/>
+        <Label text="Clientes registrados" layoutX="24" layoutY="215" textFill="#334155">
+            <font>
+                <Font name="System Bold" size="16"/>
+            </font>
+        </Label>
+        <TableView fx:id="tblClientes" layoutX="24" layoutY="250" AnchorPane.leftAnchor="24" AnchorPane.rightAnchor="24" AnchorPane.bottomAnchor="110">
+            <placeholder><Label text="Sin clientes registrados"/></placeholder>
+            <columns>
+                <TableColumn fx:id="tbcDocumento" text="Documento" prefWidth="200"/>
+                <TableColumn fx:id="tbcNombre" text="Nombre" prefWidth="440"/>
+                <TableColumn fx:id="tbcPuntos" text="Puntos" prefWidth="150"/>
+                <TableColumn fx:id="tbcRango" text="Rango" prefWidth="180"/>
+            </columns>
+        </TableView>
+        <Label fx:id="lblResultado" text="Seleccione un cliente de la tabla para actualizarlo o eliminarlo." wrapText="true" AnchorPane.leftAnchor="24" AnchorPane.rightAnchor="24" AnchorPane.bottomAnchor="50" textFill="#315e82"/>
     </children>
 </AnchorPane>

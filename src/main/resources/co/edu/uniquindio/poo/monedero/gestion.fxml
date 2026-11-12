@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.GestionViewController" prefWidth="1120" prefHeight="840">
+    <children>
+        <Label text="Monedero virtual" layoutX="24" layoutY="18" textFill="#315e82">
+            <font>
+                <Font name="System Bold" size="24"/>
+            </font>
+        </Label>
+        <Button text="Inicio" onAction="#volver" layoutX="925" layoutY="18" prefWidth="140" prefHeight="34"/>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.topAnchor="75" AnchorPane.bottomAnchor="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+            <tabs>
+                <Tab fx:id="tabClientes" text="Clientes"/>
+                <Tab fx:id="tabMonedero" text="Monedero"/>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

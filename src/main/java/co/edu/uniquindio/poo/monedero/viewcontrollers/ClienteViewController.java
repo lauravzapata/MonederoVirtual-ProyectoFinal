@@ -5,37 +5,63 @@ import co.edu.uniquindio.poo.monedero.controller.ClienteController;
 import co.edu.uniquindio.poo.monedero.model.Cliente;
 import co.edu.uniquindio.poo.monedero.exceptions.CuentaNoEncontradaException;
 import co.edu.uniquindio.poo.monedero.exceptions.DatoInvalidoException;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class ClienteViewController {
-    private Aplicacion aplicacion;
     private ClienteController clienteController;
+    private final ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
+    private Cliente selectedCliente;
 
     @FXML private TextField txtDocumento;
     @FXML private TextField txtNombre;
-    @FXML private ComboBox<Cliente> cmbCliente;
-    @FXML private Label lblClientes;
     @FXML private Label lblResultado;
+    @FXML private TableView<Cliente> tblClientes;
+    @FXML private TableColumn<Cliente, String> tbcDocumento;
+    @FXML private TableColumn<Cliente, String> tbcNombre;
+    @FXML private TableColumn<Cliente, String> tbcPuntos;
+    @FXML private TableColumn<Cliente, String> tbcRango;
 
-    public void setApp(Aplicacion aplicacion) {
-        this.aplicacion = aplicacion;
-        this.clienteController = new ClienteController(Aplicacion.monederoVirtual);
-        mostrarClientes();
+    @FXML
+    void initialize() {
+        clienteController = new ClienteController(Aplicacion.monederoVirtual);
+        initDataBinding();
+        tblClientes.setItems(listaClientes);
+        actualizarTabla();
+        listenerSelection();
+    }
+
+    private void initDataBinding() {
+        tbcDocumento.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDocumento()));
+        tbcNombre.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNombre()));
+        tbcPuntos.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getPuntos())));
+        tbcRango.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getRango()));
+    }
+
+    private void listenerSelection() {
+        tblClientes.getSelectionModel().selectedItemProperty().addListener((obs, anterior, actual) -> {
+            selectedCliente = actual;
+            if (actual != null) mostrarCliente(actual);
+        });
+    }
+
+    private void mostrarCliente(Cliente cliente) {
+        txtDocumento.setText(cliente.getDocumento());
+        txtNombre.setText(cliente.getNombre());
+        txtDocumento.setDisable(true);
     }
 
     @FXML
-    void registrarClienteEvent(ActionEvent event) {
+    void registrarCliente() {
         try {
             Cliente nuevo = clienteController.registrarCliente(txtDocumento.getText(), txtNombre.getText());
-            mostrarClientes();
-            cmbCliente.setValue(nuevo);
+            actualizarTabla();
             limpiarCampos();
             lblResultado.setText("Cliente registrado: " + nuevo);
         } catch (DatoInvalidoException e) {
@@ -44,32 +70,31 @@ public class ClienteViewController {
     }
 
     @FXML
-    void editarClienteEvent(ActionEvent event) {
+    void actualizarCliente() {
+        if (selectedCliente == null) {
+            lblResultado.setText("Seleccione un cliente de la tabla.");
+            return;
+        }
         try {
-            clienteController.editarNombre(cmbCliente.getValue(), txtNombre.getText());
-            mostrarClientes();
+            clienteController.editarNombre(selectedCliente, txtNombre.getText());
+            tblClientes.refresh();
             limpiarCampos();
-            lblResultado.setText("Nombre actualizado correctamente.");
+            lblResultado.setText("Cliente actualizado.");
         } catch (DatoInvalidoException e) {
             lblResultado.setText(e.getMessage());
         }
     }
 
     @FXML
-    void eliminarClienteEvent(ActionEvent event) {
-        Cliente cliente = cmbCliente.getValue();
-        if (cliente == null) {
-            lblResultado.setText("Selecciona un cliente.");
+    void eliminarCliente() {
+        if (selectedCliente == null) {
+            lblResultado.setText("Seleccione un cliente de la tabla.");
             return;
         }
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION,
-                "¿Eliminar al cliente " + cliente.getNombre() + "?", ButtonType.OK, ButtonType.CANCEL);
-        alerta.setHeaderText("Eliminar cliente");
-        if (alerta.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
         try {
-            clienteController.eliminarCliente(cliente.getDocumento());
-            cmbCliente.setValue(null);
-            mostrarClientes();
+            clienteController.eliminarCliente(selectedCliente.getDocumento());
+            actualizarTabla();
+            limpiarCampos();
             lblResultado.setText("Cliente eliminado.");
         } catch (DatoInvalidoException | CuentaNoEncontradaException e) {
             lblResultado.setText(e.getMessage());
@@ -77,23 +102,17 @@ public class ClienteViewController {
     }
 
     @FXML
-    void volverEvent(ActionEvent event) {
-        aplicacion.openViewInicio();
+    void limpiarCampos() {
+        tblClientes.getSelectionModel().clearSelection();
+        selectedCliente = null;
+        txtDocumento.clear();
+        txtNombre.clear();
+        txtDocumento.setDisable(false);
     }
 
-    private void mostrarClientes() {
-        Cliente seleccionado = cmbCliente.getValue();
-        cmbCliente.setItems(FXCollections.observableArrayList(clienteController.obtenerClientes()));
-        cmbCliente.setValue(seleccionado);
-        String texto = "";
-        for (Cliente cliente : clienteController.obtenerClientes()) {
-            texto = texto + cliente + "\n";
-        }
-        lblClientes.setText(texto.isEmpty() ? "Todavía no hay clientes registrados." : texto);
-    }
-
-    private void limpiarCampos() {
-        txtDocumento.setText("");
-        txtNombre.setText("");
+    public void actualizarTabla() {
+        listaClientes.setAll(clienteController.obtenerClientes());
+        tblClientes.refresh();
+        if (selectedCliente != null && !listaClientes.contains(selectedCliente)) limpiarCampos();
     }
 }

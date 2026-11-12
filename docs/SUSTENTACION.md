@@ -3,8 +3,8 @@
 ## Recorrido del código
 
 1. Abre `app/Aplicacion.java`: explica cómo carga el FXML con `FXMLLoader` y construye la escena.
-2. Abre `inicio.fxml`, `clientes.fxml` y `monedero.fxml`: muestra `fx:controller`, un `fx:id` y un `onAction`.
-3. Sigue `depositarEvent()` en `MonederoViewController`: recoge controles, llama al servicio y actualiza la pantalla.
+2. Abre `inicio.fxml`, `gestion.fxml`, `clientes.fxml` y `monedero.fxml`: muestra `fx:controller`, un `fx:id` y un `onAction`.
+3. Sigue `depositar()` en `MonederoViewController`: recoge controles, llama al servicio y actualiza la pantalla.
 4. Sigue `depositar()` en `MonederoController`: delega en `MonederoVirtual`. Abre el mismo método en el modelo para ver las validaciones, el análisis, el saldo y los puntos.
 5. Compara `Deposito`, `Retiro` y `Transferencia`: señala `extends`, métodos sobrescritos y reversión.
 6. Muestra la interfaz `IOperacion` y explica qué contrato impone.
@@ -27,13 +27,16 @@
 
 Repite el recorrido del README con tus propios datos y asegúrate de poder justificar cada regla antes de entregar.
 
-## Relación con tu parcial de panadería
+## Relación con los archivos de panadería más recientes
 
 - `Panaderia` → `MonederoVirtual`: listas y reglas en el modelo.
 - `PedidoController`/`EmpleadoController` → `MonederoController`/`ClienteController`: reciben el modelo y delegan.
-- `Aplicacion.openViewPedidos()` → `Aplicacion.openViewMonedero()`: cargar FXML, obtener `ViewController`, llamar `setApp(this)` y mostrar escena.
-- `IProduccion` → `IOperacion`: contrato mediante interfaz.
+- `App.openGestion()` → `Aplicacion.openGestion()`: carga el FXML y entrega la aplicación al controlador de gestión.
+- `GestionViewController.initialize()` → el mismo patrón: cargar los FXML y asignarlos a las pestañas.
+- `EmpleadoViewController.initDataBinding()` → `ClienteViewController.initDataBinding()`: enlazar columnas de tabla con getters.
+- `EmpleadoViewController.listenerSelection()` → `ClienteViewController.listenerSelection()`: completar el formulario desde la fila seleccionada.
+- `IProductor` → `IOperacion`: contrato mediante interfaz.
 - `PanaderoArtesanal`/`PanaderoIndustrial` → `Deposito`/`Retiro`/`Transferencia`: herencia y comportamiento sobrescrito.
-- `Collections.unmodifiableList` protege listas en ambos proyectos.
+- Las listas del modelo y las reglas de negocio se mantienen separadas de las tablas de la vista.
 
 Al volver a Inicio no se crea otro modelo. Por eso los clientes, saldos y puntos siguen disponibles al regresar a Monedero.

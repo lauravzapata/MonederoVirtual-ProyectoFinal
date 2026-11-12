@@ -8,7 +8,7 @@ El documento adjunto se tomó como fuente de requisitos académicos. Las decisio
 
 ## Pensamiento computacional
 
-**Descomposición.** Se separó el problema en clientes, monederos, transacciones, puntos, canjes, programadas, alertas y reportes. `Aplicacion` arranca la aplicación y abre Inicio, Clientes o Monedero. Los controladores de vista atienden eventos; `ClienteController` y `MonederoController` delegan las reglas en `model/MonederoVirtual`, igual que los controladores del parcial delegan en `Panaderia`.
+**Descomposición.** Se separó el problema en clientes, monederos, transacciones, puntos, canjes, programadas, alertas y reportes. `Aplicacion` arranca la aplicación y abre Inicio y la gestión con pestañas Clientes y Monedero. Los controladores de vista atienden eventos; `ClienteController` y `MonederoController` delegan las reglas en `model/MonederoVirtual`, igual que los controladores del parcial delegan en `Panaderia`.
 
 **Reconocimiento de patrones.** Todas las transacciones tienen código, cliente, monto, fecha y estado, pero difieren en puntos y reversión. Las programadas comparten fecha, frecuencia y conteo de ejecuciones. Este patrón permite recorrer colecciones heterogéneas sin repetir la lógica común.
 
@@ -67,11 +67,15 @@ El uso de `double` con redondeo conserva las herramientas numéricas básicas de
 - `SaldoInsuficienteException`: retiro, transferencia o reversión sin fondos.
 - `CuentaNoEncontradaException`: cliente o código inexistente.
 
-`MonederoVirtual` valida antes de alterar el estado. La vista captura los errores y los presenta en el panel de resultados; un número mal escrito muestra un mensaje específico. La eliminación pide confirmación y se rechaza si hay historial financiero, fondos o programadas asociadas.
+`MonederoVirtual` valida antes de alterar el estado. La vista captura los errores y los presenta en el panel de resultados; un número mal escrito muestra un mensaje específico. La eliminación se rechaza si hay historial financiero, fondos o programadas asociadas.
 
 ## Interfaz
 
-Un menú de Inicio abre Clientes o Monedero; ambas pantallas tienen botón Volver al inicio. `Aplicacion` carga cada FXML con `FXMLLoader`, obtiene el `ViewController` y llama a `setApp(this)`. La aplicación conserva una sola instancia de `MonederoVirtual`. En la pantalla Monedero, la selección de cliente y monedero permanece visible. Las pestañas separan movimientos, puntos y programadas; el panel inferior conserva resultados y alertas. Las propiedades de FXML controlan tipografía, colores de texto, separación y tamaños. No se añadieron CSS ni librerías visuales.
+Inicio ofrece Clientes, Depositar dinero y Monedero. `GestionViewController` carga los FXML de Clientes y Monedero en un `TabPane`, como en el archivo adjunto del mismo nombre. Los controladores de tabla usan `ObservableList`, `TableView`, `TableColumn` y `SimpleStringProperty`, con métodos `initDataBinding`, `listenerSelection` y actualización de datos siguiendo los ejemplos adjuntos.
+
+El formulario de depósito está siempre visible, fuera de las pestañas secundarias. Muestra cliente, monedero, saldo, monto y el botón Depositar dinero. Después del registro se puede seleccionar el monedero Principal y depositar sin crear otra cuenta. El saldo corresponde al monedero seleccionado, y el historial muestra cada movimiento en una tabla. Las pestañas secundarias contienen Historial, Puntos y beneficios, Programadas y Reportes.
+
+La interfaz utiliza `AnchorPane`, controles estándar, separadores y títulos de color, sin eslóganes ni paneles decorativos. El botón Inicio conserva el modelo compartido al navegar.
 
 ## Verificación y límites
 

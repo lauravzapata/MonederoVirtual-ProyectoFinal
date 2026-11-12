@@ -2,31 +2,26 @@
 
 El ZIP `ParcialPanaderia3-main.zip` se usó como referencia de organización. El repositorio docente adjunto se usó como referencia de conceptos. El Word `Proyecto Final programación 1-2026-2` se usó como fuente de requisitos del monedero. Sus contenidos se trataron como material del proyecto, sin sustituir la petición de conservar los conceptos del curso.
 
-## Misma separación de responsabilidades
+## Referencia de esta revisión
 
-| Parcial de panadería | Monedero final | Responsabilidad |
+Los archivos individuales más recientes (`App.java`, `GestionViewController.java`, `EmpleadoViewController.java`, `PedidoViewController.java` y sus FXML) guían la organización de la interfaz. Los métodos necesarios para el dominio del monedero conservan sus nombres de depósito, retiro, transferencia y puntos; se usan los patrones de implementación de las referencias, junto con los requisitos explícitos del Word.
+
+| Archivos adjuntos | Monedero | Patrón aplicado |
 | --- | --- | --- |
-| `app/Aplicacion` | `app/Aplicacion` | Conserva el modelo, carga FXML y cambia la escena |
-| `model/Panaderia` | `model/MonederoVirtual` | Listas, búsquedas, reglas y validaciones |
-| `controller/EmpleadoController` | `controller/ClienteController` | Delega registro, edición y consulta de clientes |
-| `controller/PedidoController` | `controller/MonederoController` | Delega operaciones del monedero |
-| `InicioViewController` | `InicioViewController` | Botones del menú inicial |
-| `EmpleadoViewController` | `ClienteViewController` | Datos de controles y eventos de clientes |
-| `PedidoViewController` | `MonederoViewController` | Datos de controles y eventos de operaciones |
-| `setApp(Aplicacion)` | `setApp(Aplicacion)` | Recibe la aplicación y construye el controlador con el modelo compartido |
-| `inicio`, `empleados`, `pedidos` | `inicio.fxml`, `clientes.fxml`, `monedero.fxml` | Una vista FXML por pantalla |
-| `IProduccion`, `Panadero` y subclases | `IOperacion`, `Transaccion` y subclases | Interfaz, abstracción, herencia y polimorfismo |
-| `List`, `ArrayList`, `Collections.unmodifiableList` | Las mismas herramientas | Guardar y proteger colecciones |
-| `PanaderiaTest` en `model` | `MonederoVirtualTest`, `ReglasAvanzadasTest`, `CasosLimiteTest` en `model` | Pruebas donde viven las reglas |
+| `App.openGestion` | `Aplicacion.openGestion` | Cargar FXML y llamar `setApp` |
+| `GestionViewController` | `GestionViewController` | Cargar vistas dentro de pestañas y actualizar al seleccionarlas |
+| `EmpleadoViewController` | `ClienteViewController` | Tabla, formulario, registro, actualización, eliminación y limpieza |
+| `PedidoViewController` | `MonederoViewController` | Tabla e ingreso de datos para operaciones |
+| `initDataBinding`, `listenerSelection`, `actualizarTabla` | Métodos del mismo patrón | Enlace de columnas, selección y refresco |
+| `ObservableList`, `TableView`, `TableColumn` | Las mismas clases | Listas y tablas JavaFX |
+| `SimpleStringProperty`, `setCellValueFactory` | Las mismas herramientas | Mostrar los getters del modelo |
+| `Panaderia` | `MonederoVirtual` | Listas y reglas del negocio |
+| `EmpleadoController`, `PedidoController` | `ClienteController`, `MonederoController` | Delegar en el modelo |
+| `IProductor` y subclases de empleados | `IOperacion` y subclases de transacciones | Interfaces, herencia y polimorfismo |
 
-Las fuentes Java tienen extensión `.java` y las vistas `.fxml`. Se usa `module-info.java`, que abre el paquete de controladores de vista a `javafx.fxml`. No se copiaron los nombres de archivo sin extensión ni la extensión `.fmxl` del ZIP, porque impedirían la compilación o la carga normal de las vistas.
+La interfaz está escrita con `AnchorPane`, controles estándar, títulos y separadores. Se retiraron los paneles decorativos, los eslóganes y las estadísticas del inicio. El depósito se mantiene visible en la parte superior del monedero y tiene acceso directo desde Inicio.
 
-## Conceptos que aparecen en los materiales
-
-- Ejemplo docente `empresa`: `Aplicacion`, `FXMLLoader`, `setApp`, `controller`, `viewcontrollers`, búsqueda con Stream y lambda.
-- Parcial de panadería: modelo central, constructores de controladores con ese modelo, `List`/`ArrayList`, vistas no modificables, validaciones, navegación con Volver, interfaces y clases abstractas.
-- Ejemplos docentes `envios` y `Tienda`: filtros, búsquedas, colecciones, fechas y pruebas JUnit.
-- Word: exige explícitamente Stream API, lambdas, al menos tres excepciones personalizadas, JavaFX, POO y detección de atípicas con media y desviación estándar.
+Se conservan las tres excepciones personalizadas, Streams, lambdas y análisis estadístico porque son requisitos explícitos del Word. Los ejemplos docentes previos aportan fechas, colecciones y pruebas JUnit. No se requieren librerías adicionales para el diseño.
 
 ## Requisitos del Word y ubicación
 
@@ -40,7 +35,7 @@ Las fuentes Java tienen extensión `.java` y las vistas `.fxml`. Se usa `module-
 | Reportes y patrones de gasto | `MonederoVirtual.reporte`, filtros y cálculos con Streams |
 | Detector de atípicas | `MonederoVirtual.esAtipica`, explicado en `INFORME_FINAL.md` |
 | Tres excepciones propias | Paquete `exceptions` |
-| Interfaz JavaFX | `app`, `viewcontrollers` y tres FXML |
+| Interfaz JavaFX | `app`, `viewcontrollers` y cuatro FXML |
 | Pensamiento computacional y análisis POO | `INFORME_FINAL.md` |
 
 ## Alcance que no debe confundirse con cumplimiento completo
