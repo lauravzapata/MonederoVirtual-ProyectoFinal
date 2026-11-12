@@ -1,20 +1,405 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.InicioViewController" prefWidth="1120" prefHeight="840">
- <children>
-  <Label layoutX="90" layoutY="110" text="◈ Monedero Virtual" textFill="#48337e"><font><Font name="System Bold" size="36"/></font></Label>
-  <Label layoutX="92" layoutY="170" text="Tu dinero organizado. Cada movimiento cuenta." textFill="#655b78"><font><Font size="18"/></font></Label>
-  <Separator layoutX="90" layoutY="220" prefWidth="870"/>
-  <Label layoutX="92" layoutY="260" text="¿Qué quieres hacer hoy?" textFill="#48337e"><font><Font name="System Bold" size="22"/></font></Label>
-  <Button layoutX="90" layoutY="320" prefWidth="340" prefHeight="80" text="Clientes" onAction="#abrirClientesEvent"><font><Font name="System Bold" size="20"/></font></Button>
-  <Label layoutX="92" layoutY="420" text="Registrar, editar y consultar clientes." textFill="#655b78"/>
-  <Button layoutX="500" layoutY="320" prefWidth="340" prefHeight="80" text="Monedero" onAction="#abrirMonederoEvent"><font><Font name="System Bold" size="20"/></font></Button>
-  <Label layoutX="502" layoutY="420" text="Movimientos, puntos, beneficios y programadas." textFill="#655b78"/>
-  <Separator layoutX="90" layoutY="520" prefWidth="870"/>
-  <Label layoutX="92" layoutY="550" text="1. Registra un cliente.   2. Crea sus monederos.   3. Realiza tus operaciones." textFill="#48337e"/>
-  <Label layoutX="92" layoutY="610" text="Proyecto final · Programación I · Universidad del Quindío" textFill="#655b78"/>
-  <Label layoutX="92" layoutY="650" text="Simulador académico: los datos se conservan durante esta sesión." textFill="#655b78"/>
- </children>
+    <children>
+        <BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <background>
+                <Background>
+                    <fills>
+                        <BackgroundFill fill="#f3f5f8">
+                            <radii>
+                                <CornerRadii radius="0"/>
+                            </radii>
+                            <insets>
+                                <Insets/>
+                            </insets>
+                        </BackgroundFill>
+                    </fills>
+                </Background>
+            </background>
+            <left>
+                <VBox spacing="20" prefWidth="230">
+                    <background>
+                        <Background>
+                            <fills>
+                                <BackgroundFill fill="#18243d">
+                                    <radii>
+                                        <CornerRadii radius="0"/>
+                                    </radii>
+                                    <insets>
+                                        <Insets/>
+                                    </insets>
+                                </BackgroundFill>
+                            </fills>
+                        </Background>
+                    </background>
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+                    <Label text="MV" textFill="white" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System Bold" size="30"/>
+                        </font>
+                    </Label>
+                    <Label text="MONEDERO VIRTUAL" textFill="white" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System Bold" size="19"/>
+                        </font>
+                    </Label>
+                    <Label text="Tu espacio financiero" textFill="#a8b7cf" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System" size="12"/>
+                        </font>
+                    </Label>
+                    <Separator/>
+                    <Button text="Clientes" onAction="#abrirClientesEvent" minHeight="40" prefWidth="175" textFill="white" fx:id="btnClientesMenu">
+                        <background>
+                            <Background>
+                                <fills>
+                                    <BackgroundFill fill="#2b3b57">
+                                        <radii>
+                                            <CornerRadii radius="10"/>
+                                        </radii>
+                                        <insets>
+                                            <Insets/>
+                                        </insets>
+                                    </BackgroundFill>
+                                </fills>
+                            </Background>
+                        </background>
+                        <padding>
+                            <Insets top="10" right="18" bottom="10" left="18"/>
+                        </padding>
+                        <font>
+                            <Font name="System Bold" size="13"/>
+                        </font>
+                    </Button>
+                    <Button text="Monedero" onAction="#abrirMonederoEvent" minHeight="40" prefWidth="175" textFill="white" fx:id="btnMonederoMenu">
+                        <background>
+                            <Background>
+                                <fills>
+                                    <BackgroundFill fill="#18745b">
+                                        <radii>
+                                            <CornerRadii radius="10"/>
+                                        </radii>
+                                        <insets>
+                                            <Insets/>
+                                        </insets>
+                                    </BackgroundFill>
+                                </fills>
+                            </Background>
+                        </background>
+                        <padding>
+                            <Insets top="10" right="18" bottom="10" left="18"/>
+                        </padding>
+                        <font>
+                            <Font name="System Bold" size="13"/>
+                        </font>
+                    </Button>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Label text="PROGRAMACIÓN I" textFill="#a8b7cf" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System Bold" size="11"/>
+                        </font>
+                    </Label>
+                    <Label text="Proyecto final Universidad del Quindío" textFill="white" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System" size="12"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </left>
+            <center>
+                <VBox spacing="20">
+                    <padding>
+                        <Insets top="30" right="30" bottom="30" left="30"/>
+                    </padding>
+                    <Label text="Hola, bienvenida." textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System Bold" size="26"/>
+                        </font>
+                    </Label>
+                    <Label text="Un vistazo a tu monedero virtual." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System" size="13"/>
+                        </font>
+                    </Label>
+                    <VBox spacing="14">
+                        <background>
+                            <Background>
+                                <fills>
+                                    <BackgroundFill fill="#18243d">
+                                        <radii>
+                                            <CornerRadii radius="20"/>
+                                        </radii>
+                                        <insets>
+                                            <Insets/>
+                                        </insets>
+                                    </BackgroundFill>
+                                </fills>
+                            </Background>
+                        </background>
+                        <padding>
+                            <Insets top="28" right="28" bottom="28" left="28"/>
+                        </padding>
+                        <Label text="TODO EN UN SOLO LUGAR" textFill="#b5f5d5" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                            <font>
+                                <Font name="System Bold" size="11"/>
+                            </font>
+                        </Label>
+                        <Label text="Tu dinero, a tu manera." textFill="white" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                            <font>
+                                <Font name="System Bold" size="36"/>
+                            </font>
+                        </Label>
+                        <Label text="Organiza tu dinero y convierte cada movimiento en beneficios." textFill="#d3deef" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                            <font>
+                                <Font name="System" size="15"/>
+                            </font>
+                        </Label>
+                        <HBox spacing="14" alignment="CENTER_LEFT">
+                            <Button text="Monedero" onAction="#abrirMonederoEvent" minHeight="40" prefWidth="170" textFill="#18243d" fx:id="btnMonederoPrincipal">
+                                <background>
+                                    <Background>
+                                        <fills>
+                                            <BackgroundFill fill="#dff8ed">
+                                                <radii>
+                                                    <CornerRadii radius="10"/>
+                                                </radii>
+                                                <insets>
+                                                    <Insets/>
+                                                </insets>
+                                            </BackgroundFill>
+                                        </fills>
+                                    </Background>
+                                </background>
+                                <padding>
+                                    <Insets top="10" right="18" bottom="10" left="18"/>
+                                </padding>
+                                <font>
+                                    <Font name="System Bold" size="13"/>
+                                </font>
+                            </Button>
+                            <Label text="Empieza seleccionando un cliente." textFill="#d3deef" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System" size="12"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                    </VBox>
+                    <HBox spacing="14" alignment="CENTER_LEFT">
+                        <VBox spacing="8" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <background>
+                                <Background>
+                                    <fills>
+                                        <BackgroundFill fill="white">
+                                            <radii>
+                                                <CornerRadii radius="14"/>
+                                            </radii>
+                                            <insets>
+                                                <Insets/>
+                                            </insets>
+                                        </BackgroundFill>
+                                    </fills>
+                                </Background>
+                            </background>
+                            <padding>
+                                <Insets top="18" right="18" bottom="18" left="18"/>
+                            </padding>
+                            <Label text="CLIENTES" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="11"/>
+                                </font>
+                            </Label>
+                            <Label text="0" textFill="#18243d" wrapText="true" fx:id="lblTotalClientes" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="27"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <VBox spacing="8" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <background>
+                                <Background>
+                                    <fills>
+                                        <BackgroundFill fill="white">
+                                            <radii>
+                                                <CornerRadii radius="14"/>
+                                            </radii>
+                                            <insets>
+                                                <Insets/>
+                                            </insets>
+                                        </BackgroundFill>
+                                    </fills>
+                                </Background>
+                            </background>
+                            <padding>
+                                <Insets top="18" right="18" bottom="18" left="18"/>
+                            </padding>
+                            <Label text="MONEDEROS" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="11"/>
+                                </font>
+                            </Label>
+                            <Label text="0" textFill="#18243d" wrapText="true" fx:id="lblTotalMonederos" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="27"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <VBox spacing="8" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <background>
+                                <Background>
+                                    <fills>
+                                        <BackgroundFill fill="#dff8ed">
+                                            <radii>
+                                                <CornerRadii radius="14"/>
+                                            </radii>
+                                            <insets>
+                                                <Insets/>
+                                            </insets>
+                                        </BackgroundFill>
+                                    </fills>
+                                </Background>
+                            </background>
+                            <padding>
+                                <Insets top="18" right="18" bottom="18" left="18"/>
+                            </padding>
+                            <Label text="SALDO TOTAL" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="11"/>
+                                </font>
+                            </Label>
+                            <Label text="\$0.00" textFill="#18243d" wrapText="true" fx:id="lblSaldoTotal" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="27"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="14" alignment="CENTER_LEFT">
+                        <VBox spacing="12" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <background>
+                                <Background>
+                                    <fills>
+                                        <BackgroundFill fill="white">
+                                            <radii>
+                                                <CornerRadii radius="16"/>
+                                            </radii>
+                                            <insets>
+                                                <Insets/>
+                                            </insets>
+                                        </BackgroundFill>
+                                    </fills>
+                                </Background>
+                            </background>
+                            <padding>
+                                <Insets top="20" right="20" bottom="20" left="20"/>
+                            </padding>
+                            <Label text="01  /  CLIENTES" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="11"/>
+                                </font>
+                            </Label>
+                            <Label text="Todo comienza contigo." textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="20"/>
+                                </font>
+                            </Label>
+                            <Label text="Registra y administra tus clientes." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System" size="13"/>
+                                </font>
+                            </Label>
+                            <Button text="Clientes" onAction="#abrirClientesEvent" minHeight="40" textFill="#18243d" fx:id="btnClientesTarjeta">
+                                <background>
+                                    <Background>
+                                        <fills>
+                                            <BackgroundFill fill="#edf2f7">
+                                                <radii>
+                                                    <CornerRadii radius="10"/>
+                                                </radii>
+                                                <insets>
+                                                    <Insets/>
+                                                </insets>
+                                            </BackgroundFill>
+                                        </fills>
+                                    </Background>
+                                </background>
+                                <padding>
+                                    <Insets top="10" right="18" bottom="10" left="18"/>
+                                </padding>
+                                <font>
+                                    <Font name="System Bold" size="13"/>
+                                </font>
+                            </Button>
+                        </VBox>
+                        <VBox spacing="12" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <background>
+                                <Background>
+                                    <fills>
+                                        <BackgroundFill fill="white">
+                                            <radii>
+                                                <CornerRadii radius="16"/>
+                                            </radii>
+                                            <insets>
+                                                <Insets/>
+                                            </insets>
+                                        </BackgroundFill>
+                                    </fills>
+                                </Background>
+                            </background>
+                            <padding>
+                                <Insets top="20" right="20" bottom="20" left="20"/>
+                            </padding>
+                            <Label text="02  /  BENEFICIOS" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="11"/>
+                                </font>
+                            </Label>
+                            <Label text="Cada movimiento cuenta." textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="20"/>
+                                </font>
+                            </Label>
+                            <Label text="Acumula puntos y canjea beneficios." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System" size="13"/>
+                                </font>
+                            </Label>
+                            <Button text="Monedero" onAction="#abrirMonederoEvent" minHeight="40" textFill="#18243d" fx:id="btnMonederoTarjeta">
+                                <background>
+                                    <Background>
+                                        <fills>
+                                            <BackgroundFill fill="#dff8ed">
+                                                <radii>
+                                                    <CornerRadii radius="10"/>
+                                                </radii>
+                                                <insets>
+                                                    <Insets/>
+                                                </insets>
+                                            </BackgroundFill>
+                                        </fills>
+                                    </Background>
+                                </background>
+                                <padding>
+                                    <Insets top="10" right="18" bottom="10" left="18"/>
+                                </padding>
+                                <font>
+                                    <Font name="System Bold" size="13"/>
+                                </font>
+                            </Button>
+                        </VBox>
+                    </HBox>
+                    <Label text="Simulador académico · Los datos se conservan durante esta sesión." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                        <font>
+                            <Font name="System" size="11"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>

@@ -4,71 +4,738 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.monedero.viewcontrollers.MonederoViewController" prefWidth="1120" prefHeight="840">
-<children><BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-<padding><Insets top="20" right="24" bottom="18" left="24"/></padding>
-<top><VBox spacing="12">
- <HBox spacing="20" alignment="CENTER_LEFT"><Button text="Volver al inicio" onAction="#volverEvent"/><Label text="◈  Monedero Virtual" textFill="#48337e"><font><Font name="System Bold" size="30"/></font></Label></HBox>
- <Label text="Tu dinero organizado. Cada movimiento cuenta." textFill="#655b78"><font><Font size="14"/></font></Label>
- <Separator/>
- <Label fx:id="lblResumen" text="Selecciona un cliente para comenzar." textFill="#48337e"><font><Font name="System Bold" size="18"/></font></Label>
-                    <TitledPane text="Tu cuenta · Selección y monederos" collapsible="false" expanded="true">
-                        <content><VBox spacing="8">
-<HBox spacing="8">
-                                <ComboBox fx:id="cmbCliente" promptText="Selecciona cliente" prefWidth="280"/>
-                                <ComboBox fx:id="cmbMonedero" promptText="Selecciona monedero" prefWidth="240"/>
-                            </HBox>
-                            <HBox spacing="8">
-                                <TextField fx:id="txtNombreMonedero" promptText="Nuevo monedero (ej. Ahorros)" prefWidth="280"/>
-                                <Button text="Crear monedero" onAction="#registrarMonederoEvent"/>
-                            </HBox>
-                        </VBox></content>
-                    </TitledPane><Label text="Las operaciones usan el cliente y monedero seleccionados. Para transferir, elige también el destino." textFill="#655b78"/>
-<Separator/>
-</VBox></top>
-<center><TabPane tabClosingPolicy="UNAVAILABLE"><tabs>
-<Tab text="Movimientos"><content><ScrollPane fitToWidth="true"><content><VBox spacing="16"><padding><Insets top="18" right="12" bottom="18" left="12"/></padding><Label text="Deposita, retira o transfiere. Consulta tu actividad y tus gastos." wrapText="true" textFill="#655b78"/><VBox spacing="8">
-                            <HBox spacing="8">
-                                <TextField fx:id="txtMonto" promptText="Monto (ej. 1000)" prefWidth="180"/>
-                                <Button text="Depositar" onAction="#depositarEvent"/>
-                                <Button text="Retirar" onAction="#retirarEvent"/>
-                                <Button text="Ver historial" onAction="#historialEvent"/>
-                                <Button text="Reporte de gastos" onAction="#reporteEvent"/>
-                            </HBox>
-                            <HBox spacing="8">
-                                <ComboBox fx:id="cmbDestinatario" promptText="Cliente destino" prefWidth="280"/>
-                                <ComboBox fx:id="cmbMonederoDestino" promptText="Monedero destino" prefWidth="240"/>
-                                <Button text="Transferir" onAction="#transferirEvent"/>
-                            </HBox>
-                            <HBox spacing="8">
-                                <TextField fx:id="txtCodigo" promptText="Código de transacción a revertir" prefWidth="265"/>
-                                <Button text="Revertir transacción" onAction="#revertirEvent"/>
-                            </HBox>
-                        </VBox></VBox></content></ScrollPane></content></Tab>
-<Tab text="Puntos y beneficios"><content><ScrollPane fitToWidth="true"><content><VBox spacing="16"><padding><Insets top="18" right="12" bottom="18" left="12"/></padding><Label text="Convierte tus puntos en beneficios. El rango se calcula con tus puntos disponibles." wrapText="true" textFill="#655b78"/><HBox spacing="8">
-                            <Button text="100 puntos: descuento" onAction="#canjear100Event"/>
-                            <Button text="500 puntos: retiros gratis" onAction="#canjear500Event"/>
-                            <Button text="1000 puntos: bono $50" onAction="#canjear1000Event"/>
-                            <Button text="Historial de puntos" onAction="#historialPuntosEvent"/>
-                        </HBox></VBox></content></ScrollPane></content></Tab>
-<Tab text="Programadas"><content><ScrollPane fitToWidth="true"><content><VBox spacing="16"><padding><Insets top="18" right="12" bottom="18" left="12"/></padding><Label text="Usa el monto y el destino de Movimientos. Las pendientes se procesan al pulsar Ejecutar vencidas." wrapText="true" textFill="#655b78"/><VBox spacing="10"><HBox spacing="8"><Label text="Destino:"/><Label text="Seleccionado en la pestaña Movimientos"/></HBox><VBox spacing="8">
-                            <HBox spacing="8">
-                                <ComboBox fx:id="cmbTipoProgramada" prefWidth="150"/>
-                                <DatePicker fx:id="dpFecha" prefWidth="175"/>
-                                <ComboBox fx:id="cmbFrecuencia" prefWidth="150"/>
-                                <Button text="Programar" onAction="#programarEvent"/>
-                                <Button text="Ejecutar vencidas" onAction="#ejecutarProgramadasEvent"/>
-                            </HBox>
-                            <HBox spacing="8">
-                                <Button text="Ver programadas" onAction="#verProgramadasEvent"/>
-                                <TextField fx:id="txtCodigoProgramada" promptText="Código programada" prefWidth="180"/>
-                                <Button text="Cancelar programada" onAction="#cancelarProgramadaEvent"/>
-                            </HBox>
-                        </VBox></VBox></VBox></content></ScrollPane></content></Tab>
-</tabs></TabPane></center>
-<bottom><VBox spacing="8">
-<Separator/>
-<HBox spacing="12" alignment="CENTER_LEFT"><Label text="Actividad y resultados" textFill="#48337e"><font><Font name="System Bold" size="15"/></font></Label><Button text="Ver notificaciones" onAction="#verNotificacionesEvent"/></HBox>
-<TextArea fx:id="txtSalida" editable="false" prefRowCount="6" wrapText="true" promptText="Aquí aparecerán tus operaciones y alertas."/>
-<Label text="Simulador académico · Datos en memoria durante esta sesión · Comisión base: 1%" textFill="#655b78"/>
-</VBox></bottom>
-</BorderPane></children></AnchorPane>
+    <children>
+        <BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <background>
+                <Background>
+                    <fills>
+                        <BackgroundFill fill="#f3f5f8">
+                            <radii>
+                                <CornerRadii radius="0"/>
+                            </radii>
+                            <insets>
+                                <Insets/>
+                            </insets>
+                        </BackgroundFill>
+                    </fills>
+                </Background>
+            </background>
+            <top>
+                <VBox spacing="16">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+                    <HBox spacing="14" alignment="CENTER_LEFT">
+                        <VBox spacing="12">
+                            <background>
+                                <Background>
+                                    <fills>
+                                        <BackgroundFill fill="#18243d">
+                                            <radii>
+                                                <CornerRadii radius="12"/>
+                                            </radii>
+                                            <insets>
+                                                <Insets/>
+                                            </insets>
+                                        </BackgroundFill>
+                                    </fills>
+                                </Background>
+                            </background>
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            <Label text="MV" textFill="white" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="17"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <VBox spacing="3">
+                            <Label text="Monedero" textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="25"/>
+                                </font>
+                            </Label>
+                            <Label text="Movimientos, puntos y beneficios en un solo lugar." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System" size="12"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="Volver al inicio" onAction="#volverEvent" minHeight="40" textFill="#18243d">
+                            <background>
+                                <Background>
+                                    <fills>
+                                        <BackgroundFill fill="#e8edf3">
+                                            <radii>
+                                                <CornerRadii radius="10"/>
+                                            </radii>
+                                            <insets>
+                                                <Insets/>
+                                            </insets>
+                                        </BackgroundFill>
+                                    </fills>
+                                </Background>
+                            </background>
+                            <padding>
+                                <Insets top="10" right="18" bottom="10" left="18"/>
+                            </padding>
+                            <font>
+                                <Font name="System Bold" size="13"/>
+                            </font>
+                        </Button>
+                    </HBox>
+                    <VBox spacing="12">
+                        <background>
+                            <Background>
+                                <fills>
+                                    <BackgroundFill fill="white">
+                                        <radii>
+                                            <CornerRadii radius="16"/>
+                                        </radii>
+                                        <insets>
+                                            <Insets/>
+                                        </insets>
+                                    </BackgroundFill>
+                                </fills>
+                            </Background>
+                        </background>
+                        <padding>
+                            <Insets top="18" right="18" bottom="18" left="18"/>
+                        </padding>
+                        <Label text="TU CUENTA" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                            <font>
+                                <Font name="System Bold" size="11"/>
+                            </font>
+                        </Label>
+                        <Label text="Selecciona un cliente para comenzar." textFill="#18243d" wrapText="true" fx:id="lblResumen" minHeight="-Infinity" maxWidth="Infinity">
+                            <font>
+                                <Font name="System Bold" size="20"/>
+                            </font>
+                        </Label>
+                        <HBox spacing="14" alignment="CENTER_LEFT">
+                            <ComboBox fx:id="cmbCliente" promptText="Cliente" prefWidth="270" minHeight="40"/>
+                            <ComboBox fx:id="cmbMonedero" promptText="Monedero" prefWidth="240" minHeight="40"/>
+                            <TextField fx:id="txtNombreMonedero" promptText="Nuevo monedero: Ahorros" prefWidth="210" minHeight="40"/>
+                            <Button text="Crear monedero" onAction="#registrarMonederoEvent" minHeight="40" textFill="#18243d">
+                                <background>
+                                    <Background>
+                                        <fills>
+                                            <BackgroundFill fill="#e8edf3">
+                                                <radii>
+                                                    <CornerRadii radius="10"/>
+                                                </radii>
+                                                <insets>
+                                                    <Insets/>
+                                                </insets>
+                                            </BackgroundFill>
+                                        </fills>
+                                    </Background>
+                                </background>
+                                <padding>
+                                    <Insets top="10" right="18" bottom="10" left="18"/>
+                                </padding>
+                                <font>
+                                    <Font name="System Bold" size="13"/>
+                                </font>
+                            </Button>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </top>
+            <center>
+                <TabPane tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Movimientos">
+                            <content>
+                                <ScrollPane fitToWidth="true">
+                                    <content>
+                                        <VBox spacing="12">
+                                            <padding>
+                                                <Insets top="12" right="12" bottom="12" left="12"/>
+                                            </padding>
+                                            <VBox spacing="15">
+                                                <background>
+                                                    <Background>
+                                                        <fills>
+                                                            <BackgroundFill fill="white">
+                                                                <radii>
+                                                                    <CornerRadii radius="16"/>
+                                                                </radii>
+                                                                <insets>
+                                                                    <Insets/>
+                                                                </insets>
+                                                            </BackgroundFill>
+                                                        </fills>
+                                                    </Background>
+                                                </background>
+                                                <padding>
+                                                    <Insets top="18" right="18" bottom="18" left="18"/>
+                                                </padding>
+                                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                                    <Label text="Monto de la operación" textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Label>
+                                                    <TextField fx:id="txtMonto" promptText="Ejemplo: 1000" prefWidth="190" minHeight="40"/>
+                                                    <Button text="Depositar" onAction="#depositarEvent" minHeight="40" textFill="white">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#18745b">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                    <Button text="Retirar" onAction="#retirarEvent" minHeight="40" textFill="#18243d">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#e8edf3">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                    <Button text="Ver historial" onAction="#historialEvent" minHeight="40" textFill="#18243d">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#e8edf3">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                    <Button text="Reporte de gastos" onAction="#reporteEvent" minHeight="40" textFill="#18243d">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#e8edf3">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                </HBox>
+                                                <Separator/>
+                                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                                    <ComboBox fx:id="cmbDestinatario" promptText="Cliente destino" prefWidth="260" minHeight="40"/>
+                                                    <ComboBox fx:id="cmbMonederoDestino" promptText="Monedero destino" prefWidth="240" minHeight="40"/>
+                                                    <Button text="Transferir" onAction="#transferirEvent" minHeight="40" textFill="white">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#18745b">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                </HBox>
+                                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                                    <TextField fx:id="txtCodigo" promptText="Código de transacción a revertir" prefWidth="290" minHeight="40"/>
+                                                    <Button text="Revertir transacción" onAction="#revertirEvent" minHeight="40" textFill="#a53b3b">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#fff0ef">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                </HBox>
+                                            </VBox>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Puntos y beneficios">
+                            <content>
+                                <ScrollPane fitToWidth="true">
+                                    <content>
+                                        <VBox spacing="12">
+                                            <padding>
+                                                <Insets top="12" right="12" bottom="12" left="12"/>
+                                            </padding>
+                                            <VBox spacing="12">
+                                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                                    <VBox spacing="12" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="white">
+                                                                        <radii>
+                                                                            <CornerRadii radius="16"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="20" right="20" bottom="20" left="20"/>
+                                                        </padding>
+                                                        <Label text="100" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System Bold" size="30"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="PUNTOS" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System Bold" size="10"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="10% de descuento
+en comisión de transferencia." textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System" size="13"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Button text="100 puntos: descuento" onAction="#canjear100Event" minHeight="40" textFill="white">
+                                                            <background>
+                                                                <Background>
+                                                                    <fills>
+                                                                        <BackgroundFill fill="#18745b">
+                                                                            <radii>
+                                                                                <CornerRadii radius="10"/>
+                                                                            </radii>
+                                                                            <insets>
+                                                                                <Insets/>
+                                                                            </insets>
+                                                                        </BackgroundFill>
+                                                                    </fills>
+                                                                </Background>
+                                                            </background>
+                                                            <padding>
+                                                                <Insets top="10" right="18" bottom="10" left="18"/>
+                                                            </padding>
+                                                            <font>
+                                                                <Font name="System Bold" size="13"/>
+                                                            </font>
+                                                        </Button>
+                                                    </VBox>
+                                                    <VBox spacing="12" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="white">
+                                                                        <radii>
+                                                                            <CornerRadii radius="16"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="20" right="20" bottom="20" left="20"/>
+                                                        </padding>
+                                                        <Label text="500" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System Bold" size="30"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="PUNTOS" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System Bold" size="10"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="Un mes de retiros
+sin comisión." textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System" size="13"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Button text="500 puntos: retiros gratis" onAction="#canjear500Event" minHeight="40" textFill="white">
+                                                            <background>
+                                                                <Background>
+                                                                    <fills>
+                                                                        <BackgroundFill fill="#18745b">
+                                                                            <radii>
+                                                                                <CornerRadii radius="10"/>
+                                                                            </radii>
+                                                                            <insets>
+                                                                                <Insets/>
+                                                                            </insets>
+                                                                        </BackgroundFill>
+                                                                    </fills>
+                                                                </Background>
+                                                            </background>
+                                                            <padding>
+                                                                <Insets top="10" right="18" bottom="10" left="18"/>
+                                                            </padding>
+                                                            <font>
+                                                                <Font name="System Bold" size="13"/>
+                                                            </font>
+                                                        </Button>
+                                                    </VBox>
+                                                    <VBox spacing="12" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="white">
+                                                                        <radii>
+                                                                            <CornerRadii radius="16"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="20" right="20" bottom="20" left="20"/>
+                                                        </padding>
+                                                        <Label text="1000" textFill="#18745b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System Bold" size="30"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="PUNTOS" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System Bold" size="10"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="Un bono de $50
+en tu monedero seleccionado." textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                            <font>
+                                                                <Font name="System" size="13"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Button text="1000 puntos: bono $50" onAction="#canjear1000Event" minHeight="40" textFill="white">
+                                                            <background>
+                                                                <Background>
+                                                                    <fills>
+                                                                        <BackgroundFill fill="#18745b">
+                                                                            <radii>
+                                                                                <CornerRadii radius="10"/>
+                                                                            </radii>
+                                                                            <insets>
+                                                                                <Insets/>
+                                                                            </insets>
+                                                                        </BackgroundFill>
+                                                                    </fills>
+                                                                </Background>
+                                                            </background>
+                                                            <padding>
+                                                                <Insets top="10" right="18" bottom="10" left="18"/>
+                                                            </padding>
+                                                            <font>
+                                                                <Font name="System Bold" size="13"/>
+                                                            </font>
+                                                        </Button>
+                                                    </VBox>
+                                                </HBox>
+                                                <Button text="Historial de puntos" onAction="#historialPuntosEvent" minHeight="40" textFill="#18243d">
+                                                    <background>
+                                                        <Background>
+                                                            <fills>
+                                                                <BackgroundFill fill="#e8edf3">
+                                                                    <radii>
+                                                                        <CornerRadii radius="10"/>
+                                                                    </radii>
+                                                                    <insets>
+                                                                        <Insets/>
+                                                                    </insets>
+                                                                </BackgroundFill>
+                                                            </fills>
+                                                        </Background>
+                                                    </background>
+                                                    <padding>
+                                                        <Insets top="10" right="18" bottom="10" left="18"/>
+                                                    </padding>
+                                                    <font>
+                                                        <Font name="System Bold" size="13"/>
+                                                    </font>
+                                                </Button>
+                                            </VBox>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Programadas">
+                            <content>
+                                <ScrollPane fitToWidth="true">
+                                    <content>
+                                        <VBox spacing="12">
+                                            <padding>
+                                                <Insets top="12" right="12" bottom="12" left="12"/>
+                                            </padding>
+                                            <VBox spacing="12">
+                                                <background>
+                                                    <Background>
+                                                        <fills>
+                                                            <BackgroundFill fill="white">
+                                                                <radii>
+                                                                    <CornerRadii radius="16"/>
+                                                                </radii>
+                                                                <insets>
+                                                                    <Insets/>
+                                                                </insets>
+                                                            </BackgroundFill>
+                                                        </fills>
+                                                    </Background>
+                                                </background>
+                                                <padding>
+                                                    <Insets top="18" right="18" bottom="18" left="18"/>
+                                                </padding>
+                                                <Label text="Usa el monto y el destino de Movimientos. Se ejecutan al pulsar Ejecutar vencidas." textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                                    <font>
+                                                        <Font name="System" size="12"/>
+                                                    </font>
+                                                </Label>
+                                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                                    <ComboBox fx:id="cmbTipoProgramada" promptText="Tipo" prefWidth="175" minHeight="40"/>
+                                                    <DatePicker fx:id="dpFecha" prefWidth="175" minHeight="40"/>
+                                                    <ComboBox fx:id="cmbFrecuencia" promptText="Frecuencia" prefWidth="145" minHeight="40"/>
+                                                    <Button text="Programar" onAction="#programarEvent" minHeight="40" textFill="white">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#18745b">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                    <Button text="Ejecutar vencidas" onAction="#ejecutarProgramadasEvent" minHeight="40" textFill="#18243d">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#e8edf3">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                </HBox>
+                                                <Separator/>
+                                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                                    <Button text="Ver programadas" onAction="#verProgramadasEvent" minHeight="40" textFill="#18243d">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#e8edf3">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                    <TextField fx:id="txtCodigoProgramada" promptText="Código de programada" prefWidth="200" minHeight="40"/>
+                                                    <Button text="Cancelar programada" onAction="#cancelarProgramadaEvent" minHeight="40" textFill="#a53b3b">
+                                                        <background>
+                                                            <Background>
+                                                                <fills>
+                                                                    <BackgroundFill fill="#fff0ef">
+                                                                        <radii>
+                                                                            <CornerRadii radius="10"/>
+                                                                        </radii>
+                                                                        <insets>
+                                                                            <Insets/>
+                                                                        </insets>
+                                                                    </BackgroundFill>
+                                                                </fills>
+                                                            </Background>
+                                                        </background>
+                                                        <padding>
+                                                            <Insets top="10" right="18" bottom="10" left="18"/>
+                                                        </padding>
+                                                        <font>
+                                                            <Font name="System Bold" size="13"/>
+                                                        </font>
+                                                    </Button>
+                                                </HBox>
+                                            </VBox>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+            <bottom>
+                <VBox>
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <VBox spacing="8">
+                        <background>
+                            <Background>
+                                <fills>
+                                    <BackgroundFill fill="white">
+                                        <radii>
+                                            <CornerRadii radius="16"/>
+                                        </radii>
+                                        <insets>
+                                            <Insets/>
+                                        </insets>
+                                    </BackgroundFill>
+                                </fills>
+                            </Background>
+                        </background>
+                        <padding>
+                            <Insets top="16" right="16" bottom="16" left="16"/>
+                        </padding>
+                        <HBox spacing="14" alignment="CENTER_LEFT">
+                            <Label text="Actividad y resultados" textFill="#18243d" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                                <font>
+                                    <Font name="System Bold" size="16"/>
+                                </font>
+                            </Label>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="Ver notificaciones" onAction="#verNotificacionesEvent" minHeight="40" textFill="#18243d">
+                                <background>
+                                    <Background>
+                                        <fills>
+                                            <BackgroundFill fill="#e8edf3">
+                                                <radii>
+                                                    <CornerRadii radius="10"/>
+                                                </radii>
+                                                <insets>
+                                                    <Insets/>
+                                                </insets>
+                                            </BackgroundFill>
+                                        </fills>
+                                    </Background>
+                                </background>
+                                <padding>
+                                    <Insets top="10" right="18" bottom="10" left="18"/>
+                                </padding>
+                                <font>
+                                    <Font name="System Bold" size="13"/>
+                                </font>
+                            </Button>
+                        </HBox>
+                        <TextArea fx:id="txtSalida" editable="false" wrapText="true" prefRowCount="4" prefHeight="110"/>
+                        <Label text="Simulador académico · Datos en memoria · Comisión base: 1%" textFill="#64748b" wrapText="true" minHeight="-Infinity" maxWidth="Infinity">
+                            <font>
+                                <Font name="System" size="10"/>
+                            </font>
+                        </Label>
+                    </VBox>
+                </VBox>
+            </bottom>
+        </BorderPane>
+    </children>
+</AnchorPane>

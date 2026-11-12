@@ -1,3 +1,16 @@
+OK: Inicio sin clientes ficticios
+OK: Inicio sin monederos ficticios
+OK: Saldo inicial real
+OK: Navega botón btnClientesMenu
+OK: Regresa desde btnClientesMenu
+OK: Navega botón btnClientesTarjeta
+OK: Regresa desde btnClientesTarjeta
+OK: Navega botón btnMonederoMenu
+OK: Regresa desde btnMonederoMenu
+OK: Navega botón btnMonederoPrincipal
+OK: Regresa desde btnMonederoPrincipal
+OK: Navega botón btnMonederoTarjeta
+OK: Regresa desde btnMonederoTarjeta
 OK: FXML y tres pestañas cargan
 OK: Mensaje: cliente válido (recibido: Aviso: Selecciona un cliente válido.)
 OK: Mensaje: Selecciona un cliente (recibido: Selecciona un cliente.)
@@ -49,4 +62,7 @@ OK: Sin destino seleccionado al abrir pantalla
 OK: Sin monedero seleccionado al abrir pantalla
 OK: Resumen recupera los datos compartidos
 OK: Saldo se conserva al volver al inicio
-INTERFAZ: 51 comprobaciones aprobadas
+OK: Resumen cuenta clientes actuales
+OK: Resumen cuenta monederos actuales
+OK: Resumen de saldo usa valores reales
+INTERFAZ: 67 comprobaciones aprobadas

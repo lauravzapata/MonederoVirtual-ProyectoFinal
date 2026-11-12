@@ -8,7 +8,7 @@ Se ejecutó `clean test` con Maven 3.8.5, JDK 21 y JavaFX 21.0.6.
 
 **Resultado actualizado: 41 pruebas JUnit, 0 fallos, 0 errores, 0 omitidas.**
 
-Además, el recorrido JavaFX completó **51 comprobaciones de interfaz**. Los conteos son independientes: las comprobaciones gráficas no se incluyen en las 41 pruebas JUnit.
+Además, el recorrido JavaFX completó **67 comprobaciones de interfaz**. Los conteos son independientes: las comprobaciones gráficas no se incluyen en las 41 pruebas JUnit.
 
 | Grupo | Cantidad | Casos cubiertos |
 | --- | ---: | --- |
@@ -32,9 +32,9 @@ Un recorrido automatizado auxiliar, fuera del código de entrega, pulsa los cont
 - Historial de puntos y retiro sin comisión después del canje.
 - Creación, ejecución y cancelación de programadas; rechazo de una segunda ejecución de la misma operación única.
 - Notificaciones, confirmación de eliminación y protección del historial financiero.
-- Navegación con Volver al inicio, persistencia de los saldos al cambiar de pantalla y exclusión de clientes eliminados en los destinos.
+- Los cinco accesos del Inicio (menú, tarjeta principal y tarjetas inferiores), los tres indicadores con valores reales y navegación con Volver al inicio, persistencia de los saldos al cambiar de pantalla y exclusión de clientes eliminados en los destinos.
 
-**Resultado: 51 comprobaciones aprobadas.** La ejecución usa el FXML y los eventos reales; no reemplaza el controlador por uno simulado.
+**Resultado: 67 comprobaciones aprobadas.** La ejecución usa el FXML y los eventos reales; no reemplaza el controlador por uno simulado.
 
 Para repetir las pruebas del negocio, ejecuta `./mvnw test` en Linux/macOS o `mvnw.cmd test` en Windows. Para comprobar las pantallas, ejecuta la aplicación y sigue el recorrido del README. La automatización gráfica de este entorno utilizó Monocle y un script auxiliar, mantenidos fuera de las fuentes de entrega para no introducir herramientas o clases de concurrencia ajenas a los ejemplos del curso.
 
@@ -49,7 +49,7 @@ También se trasladaron las 40 pruebas de reglas a `src/test/.../model`, como `P
 ### Evidencia guardada
 
 - [Resumen de la ejecución JUnit](resultado-pruebas.txt).
-- [Salida de las 51 comprobaciones gráficas](resultado-interfaz.txt).
+- [Salida de las 67 comprobaciones gráficas](resultado-interfaz.txt).
 
 Las capturas `docs/inicio.png`, `docs/clientes.png` y `docs/interfaz.png` corresponden a la estructura de tres pantallas de esta versión. Esta comprobación se realizó en JavaFX para Linux; no se verificó la apariencia específica de Windows ni macOS. Ninguna suite garantiza todos los estados posibles del programa.
 

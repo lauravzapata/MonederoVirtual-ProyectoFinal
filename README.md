@@ -8,6 +8,8 @@ Un simulador de escritorio para administrar clientes, separar ahorros y gastos, 
 
 Otras pantallas: [Inicio](docs/inicio.png) · [Clientes](docs/clientes.png).
 
+[Cómo abrir la versión completa y resolver pantallas vacías](docs/ABRIR_PROYECTO.md).
+
 ## Ejecutar
 
 Requisito: **JDK 21** (incluye compilador), conexión para la primera descarga y un escritorio gráfico.

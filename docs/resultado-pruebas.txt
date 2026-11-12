@@ -1,5 +1,5 @@
 Pruebas con JDK 21.0.13, Maven 3.8.5 y JavaFX 21.0.6.
-Estructura: Aplicacion → ViewController → Controller → MonederoVirtual.
+Versión con interfaz azul oscuro y verde menta.
 Fecha local: 11 de noviembre de 2026 (America/Bogota).
 
 co.edu.uniquindio.poo.monedero.controller.ControladoresTest: pruebas=1, fallos=0, errores=0, omitidas=0
