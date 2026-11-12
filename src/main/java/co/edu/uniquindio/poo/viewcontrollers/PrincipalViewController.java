@@ -31,12 +31,14 @@ public class PrincipalViewController {
     private void refrescar() {
         Cliente actual = cliente.getValue();
         Cliente receptor = destinatario.getValue();
+        if (!controller.getClientes().contains(actual)) actual = null;
+        if (!controller.getClientes().contains(receptor)) receptor = null;
         Monedero actualMonedero = monedero.getValue();
         Monedero receptorMonedero = monederoDestino.getValue();
         cliente.setItems(FXCollections.observableArrayList(controller.getClientes()));
         destinatario.setItems(FXCollections.observableArrayList(controller.getClientes()));
         cliente.setValue(actual);
-        destinatario.setValue(controller.getClientes().contains(receptor) ? receptor : null);
+        destinatario.setValue(receptor);
         actualizarMonederos();
         actualizarDestino();
         if (actual != null && actual.getMonederos().contains(actualMonedero)) monedero.setValue(actualMonedero);
@@ -45,7 +47,10 @@ public class PrincipalViewController {
     }
     private void actualizarMonederos() {
         Cliente c = cliente.getValue();
-        if (c == null) monedero.setItems(FXCollections.observableArrayList());
+        if (c == null) {
+            monedero.setItems(FXCollections.observableArrayList());
+            monedero.setValue(null);
+        }
         else {
             monedero.setItems(FXCollections.observableArrayList(c.getMonederos()));
             monedero.getSelectionModel().selectFirst();
@@ -54,7 +59,10 @@ public class PrincipalViewController {
     }
     private void actualizarDestino() {
         Cliente c = destinatario.getValue();
-        if (c == null) monederoDestino.setItems(FXCollections.observableArrayList());
+        if (c == null) {
+            monederoDestino.setItems(FXCollections.observableArrayList());
+            monederoDestino.setValue(null);
+        }
         else {
             monederoDestino.setItems(FXCollections.observableArrayList(c.getMonederos()));
             monederoDestino.getSelectionModel().selectFirst();

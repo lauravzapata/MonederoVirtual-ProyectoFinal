@@ -66,8 +66,8 @@ public class MonederoController {
             throw new DatoInvalidoException("Selecciona un monedero de ese cliente.");
     }
     private void verificarMonto(double monto) throws DatoInvalidoException {
-        if (!Double.isFinite(monto) || monto <= 0 || monto > 1000000000)
-            throw new DatoInvalidoException("Ingresa un monto mayor a cero y hasta mil millones.");
+        if (!Double.isFinite(monto) || monto < 0.01 || monto > 1000000000)
+            throw new DatoInvalidoException("Ingresa un monto desde un centavo y hasta mil millones.");
         if (Math.abs(monto * 100 - Math.rint(monto * 100)) > 0.00001)
             throw new DatoInvalidoException("El monto admite como máximo dos decimales.");
     }

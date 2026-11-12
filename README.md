@@ -62,7 +62,7 @@ Se emplean clases, herencia, interfaz, listas `ArrayList`, ciclos, condicionales
 | Transferencia enviada | 3 | 1% |
 | Transferencia recibida | 0 | 0% |
 
-Los montos admiten dos decimales y un máximo de mil millones por operación; se rechazan cero, negativos, infinito y NaN. Se redondean saldo y comisiones a centavos usando las herramientas numéricas básicas del curso.
+Los montos admiten dos decimales, un mínimo de un centavo y un máximo de mil millones por operación; se rechazan cero, negativos, infinito y NaN. Se redondean saldo y comisiones a centavos usando las herramientas numéricas básicas del curso.
 
 | Rango, según puntos disponibles | Intervalo | Reducción de comisión de transferencia |
 | --- | --- | ---: |
